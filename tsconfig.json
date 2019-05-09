@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true
+  },
+  "include": ["./lighthouse-plugin-crux/**/*.js", "./types/*.d.ts", "./node_modules/**/*.d.ts"]
+}
