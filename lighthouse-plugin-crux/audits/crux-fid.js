@@ -1,7 +1,7 @@
 const { Audit } = require('lighthouse')
 const { getCruxData } = require('../psi')
 
-class CruxFcpAudit extends Audit {
+class CruxFidAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -17,18 +17,36 @@ class CruxFcpAudit extends Audit {
   }
 
   /**
+   * @return {LH.Audit.ScoreOptions}
+   */
+  static get defaultOptions() {
+    return {
+      scorePODR: 50,
+      scoreMedian: 250
+    }
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts) {
+  static async audit(artifacts, context) {
     const { URL, settings } = artifacts
     const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
     const json = await getCruxData(URL.finalUrl, strategy)
-    console.log(json)
+    if (!json.loadingExperience || !json.loadingExperience.metrics) {
+      return { score: null, notApplicable: true }
+    }
+
+    const numericValue = json.loadingExperience.metrics.FIRST_INPUT_DELAY_MS.percentile
+    const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
     return {
-      score: 0.9
+      score,
+      numericValue,
+      displayValue: `${numericValue} ms`
     }
   }
 }
 
-module.exports = CruxFcpAudit
+module.exports = CruxFidAudit

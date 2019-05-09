@@ -40,7 +40,6 @@ async function runPsi(opts, retryCounter = 0) {
   const { url, strategy } = opts
   const category = 'best-practices' // no support for "none", fastest category
   const params = stringify({ url, strategy, category })
-  console.log('fetch')
   const res = await fetch(runPagespeedUrl + '?' + params)
   if (res.status === 200) return res.json()
 
