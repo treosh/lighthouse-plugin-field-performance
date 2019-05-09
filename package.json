@@ -5,9 +5,9 @@
   "repository": "treosh/lighthouse-plugin-crux",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>",
   "license": "MIT",
-  "source": "src/index.js",
+  "source": "lighthouse-plugin-crux/index.js",
   "files": [
-    "src"
+    "lighthouse-plugin-crux"
   ],
   "keywords": [
     "lighthouse",
@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "prettier": "^1.17.0"
+  },
+  "peerDependencies": {
+    "lighthouse": "^5.0.0"
   }
 }
