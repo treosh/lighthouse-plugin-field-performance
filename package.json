@@ -1,7 +1,7 @@
 {
   "name": "lighthouse-plugin-crux",
   "version": "1.0.0",
-  "description": "Key web performance metrics",
+  "description": "Lighthouse plugin to display field data",
   "repository": "treosh/lighthouse-plugin-crux",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>",
   "license": "MIT",

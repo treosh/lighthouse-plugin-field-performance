@@ -6,6 +6,7 @@ const { stringify } = require('querystring')
 const runPagespeedUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
 const retryDelay = 3000
 const maxRetries = 3
+const requests = new Map()
 
 /**
  * Cache results and parse crux data.
@@ -16,7 +17,11 @@ const maxRetries = 3
  */
 
 exports.getCruxData = async function(url, strategy) {
-  const json = await runPsi({ url, strategy })
+  const key = url + strategy
+  if (!requests.has(key)) {
+    requests.set(key, runPsi({ url, strategy }))
+  }
+  const json = await requests.get(key)
   return json.error
     ? { error: json.error }
     : { loadingExperience: json.loadingExperience, originLoadingExperience: json.originLoadingExperience }
@@ -35,6 +40,7 @@ async function runPsi(opts, retryCounter = 0) {
   const { url, strategy } = opts
   const category = 'best-practices' // no support for "none", fastest category
   const params = stringify({ url, strategy, category })
+  console.log('fetch')
   const res = await fetch(runPagespeedUrl + '?' + params)
   if (res.status === 200) return res.json()
 

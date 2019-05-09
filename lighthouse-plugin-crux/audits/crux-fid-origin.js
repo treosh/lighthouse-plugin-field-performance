@@ -1,16 +1,17 @@
 const { Audit } = require('lighthouse')
 const { getCruxData } = require('../psi')
 
-class CruxAudit extends Audit {
+class CruxFcpOriginAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'crux',
-      title: '',
+      id: 'crux-fid-origin',
+      title: 'First Input Delay (Origin)',
+      description: 'First Input Delay',
       failureTitle: '',
-      description: 'First Contentful Paint',
+      scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings']
     }
   }
@@ -25,9 +26,9 @@ class CruxAudit extends Audit {
     const json = await getCruxData(URL.finalUrl, strategy)
     console.log(json)
     return {
-      score: 0.9
+      score: 1
     }
   }
 }
 
-module.exports = CruxAudit
+module.exports = CruxFcpOriginAudit
