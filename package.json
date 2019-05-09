@@ -1,0 +1,28 @@
+{
+  "name": "lighthouse-plugin-crux",
+  "version": "1.0.0",
+  "description": "Key web performance metrics",
+  "repository": "treosh/lighthouse-plugin-crux",
+  "author": "Aleksey Kulikov <alekseykulikov@me.com>",
+  "license": "MIT",
+  "source": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "lighthouse",
+    "lighthouse plugin",
+    "chrome user experience report",
+    "crux",
+    "chrome ux report",
+    "real user monitoring",
+    "first contentful paint",
+    "first input delay"
+  ],
+  "scripts": {
+    "test": "eslint src && yarn build && ava"
+  },
+  "devDependencies": {
+    "prettier": "^1.17.0"
+  }
+}
