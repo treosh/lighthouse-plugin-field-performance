@@ -7,7 +7,7 @@ class CruxFcpOriginAudit extends Audit {
    */
   static get meta() {
     return {
-      id: 'crux-fcp-origin',
+      id: 'field-fcp-origin',
       title: 'First Contentful Paint (Origin)',
       description: 'First Contentful Paint',
       failureTitle: '',

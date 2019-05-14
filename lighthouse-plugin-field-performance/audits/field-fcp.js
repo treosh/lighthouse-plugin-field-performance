@@ -7,7 +7,7 @@ class CruxFcpAudit extends Audit {
    */
   static get meta() {
     return {
-      id: 'crux-fcp',
+      id: 'field-fcp',
       title: 'First Contentful Paint',
       description: 'First Contentful Paint',
       failureTitle: '',
