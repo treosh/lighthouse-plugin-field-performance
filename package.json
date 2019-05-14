@@ -1,13 +1,13 @@
 {
-  "name": "lighthouse-plugin-crux",
+  "name": "lighthouse-plugin-field-performance",
   "version": "1.0.0",
   "description": "Lighthouse plugin to display field data",
   "repository": "treosh/lighthouse-plugin-crux",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>",
   "license": "MIT",
-  "source": "lighthouse-plugin-crux/index.js",
+  "source": "lighthouse-plugin-field-performance/index.js",
   "files": [
-    "lighthouse-plugin-crux"
+    "lighthouse-plugin-field-performance"
   ],
   "keywords": [
     "lighthouse",
@@ -20,7 +20,7 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c lighthouse-plugin-crux/** package.json README.md && tsc -p ."
+    "test": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p ."
   },
   "dependencies": {
     "node-fetch": "^2.5.0"
