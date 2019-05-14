@@ -8,7 +8,7 @@ class CruxFcpOriginAudit extends Audit {
   static get meta() {
     return {
       id: 'field-fcp-origin',
-      title: 'First Contentful Paint (Origin)',
+      title: 'First Contentful Paint',
       description: 'First Contentful Paint',
       failureTitle: '',
       scoreDisplayMode: 'numeric',
