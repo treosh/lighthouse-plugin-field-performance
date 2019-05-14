@@ -38,13 +38,31 @@ class CruxFcpAudit extends Audit {
     if (!json.loadingExperience || !json.loadingExperience.metrics) {
       return { score: null, notApplicable: true }
     }
+    const FCP = json.loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
 
-    const numericValue = json.loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS.percentile
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      { key: 'proportion', itemType: 'text', text: 'Proportion' },
+      { key: 'min', itemType: 'text', text: 'Min' },
+      { key: 'max', itemType: 'text', text: 'Max' }
+    ]
+
+    /** @type {LH.Audit.Details.Table['items']} */
+    const items = FCP.distributions.map(({ min, max, proportion }) => {
+      return {
+        min: `${(min / 1000).toFixed(1)} sec`,
+        max: `${max ? (max / 1000).toFixed(1) : '60'} sec`,
+        proportion: `${(proportion * 100).toFixed(1)} %`
+      }
+    })
+
+    const numericValue = FCP.percentile
     const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
     return {
       score,
       numericValue,
-      displayValue: `${(numericValue / 1000).toFixed(1)} s`
+      displayValue: `${(numericValue / 1000).toFixed(1)} s`,
+      details: Audit.makeTableDetails(headings, items)
     }
   }
 }
