@@ -1,5 +1,4 @@
 const { Audit } = require('lighthouse')
-const { getCruxData } = require('../psi')
 const FieldAudit = require('./field-audit')
 
 class FieldFcpOriginAudit extends Audit {
@@ -33,13 +32,16 @@ class FieldFcpOriginAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const { URL, settings } = artifacts
-    const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
-    const json = await getCruxData(URL.finalUrl, strategy)
-    if (!json.originLoadingExperience || !json.originLoadingExperience.metrics) {
-      return { score: null, notApplicable: true }
+    const json = await FieldAudit.getData(artifacts, context)
+    const { originLoadingExperience } = json
+    if (!originLoadingExperience) {
+      return {
+        ...json,
+        explanation: `The Chrome User Experience Report 
+          does not have sufficient real-world ${FieldFcpOriginAudit.meta.title} data for this origin.`
+      }
     }
-    const FCP = json.originLoadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
+    const FCP = originLoadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
 
     const numericValue = FCP.percentile
     const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)

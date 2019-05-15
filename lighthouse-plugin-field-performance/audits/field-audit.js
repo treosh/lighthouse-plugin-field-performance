@@ -1,6 +1,8 @@
 const { Audit } = require('lighthouse')
+const { getCruxData } = require('../psi')
 
 class FieldAudit extends Audit {
+  // @todo add typings
   static makeTableDistributions(distributions) {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
@@ -23,19 +25,30 @@ class FieldAudit extends Audit {
           item.category = `Slow (longer than ${normMin}s)`
         }
 
-        item.distribution = (proportion * 100).toFixed(1)
+        item.distribution = `${(proportion * 100).toFixed()} %`
 
-        return item
-      })
-      .sort(function(a, b) {
-        return (b.distribution * 100).toFixed() - (a.distribution * 100).toFixed()
-      })
-      .map(item => {
-        item.distribution = `${item.distribution} %`
         return item
       })
 
     return Audit.makeTableDetails(headings, items)
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<Object>|Promise<LH.Audit.Product>}
+   */
+  static async getData(artifacts, context) {
+    const { URL, settings } = artifacts
+    const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
+    const json = await getCruxData(URL.finalUrl, strategy)
+    if (!json.loadingExperience || !json.loadingExperience.metrics) {
+      return {
+        score: null,
+        notApplicable: true
+      }
+    }
+    return json
   }
 }
 
