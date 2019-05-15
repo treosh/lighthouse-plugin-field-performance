@@ -1,7 +1,8 @@
 const { Audit } = require('lighthouse')
 const { getCruxData } = require('../psi')
+const FieldAudit = require('./field-audit')
 
-class CruxFidAudit extends Audit {
+class FieldFidAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -38,15 +39,17 @@ class CruxFidAudit extends Audit {
     if (!json.loadingExperience || !json.loadingExperience.metrics) {
       return { score: null, notApplicable: true }
     }
+    const FID = json.loadingExperience.metrics.FIRST_INPUT_DELAY_MS
 
-    const numericValue = json.loadingExperience.metrics.FIRST_INPUT_DELAY_MS.percentile
+    const numericValue = FID.percentile
     const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
     return {
       score,
       numericValue,
-      displayValue: `${numericValue} ms`
+      displayValue: `${numericValue} ms`,
+      details: FieldAudit.makeTableDistributions(FID.distributions)
     }
   }
 }
 
-module.exports = CruxFidAudit
+module.exports = FieldFidAudit

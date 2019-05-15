@@ -1,7 +1,8 @@
 const { Audit } = require('lighthouse')
 const { getCruxData } = require('../psi')
+const FieldAudit = require('./field-audit')
 
-class CruxFcpOriginAudit extends Audit {
+class FieldFcpOriginAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -38,15 +39,17 @@ class CruxFcpOriginAudit extends Audit {
     if (!json.originLoadingExperience || !json.originLoadingExperience.metrics) {
       return { score: null, notApplicable: true }
     }
+    const FCP = json.originLoadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
 
-    const numericValue = json.originLoadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS.percentile
+    const numericValue = FCP.percentile
     const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
     return {
       score,
       numericValue,
-      displayValue: `${(numericValue / 1000).toFixed(1)} s`
+      displayValue: `${(numericValue / 1000).toFixed(1)} s`,
+      details: FieldAudit.makeTableDistributions(FCP.distributions)
     }
   }
 }
 
-module.exports = CruxFcpOriginAudit
+module.exports = FieldFcpOriginAudit

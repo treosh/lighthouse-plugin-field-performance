@@ -1,7 +1,8 @@
 const { Audit } = require('lighthouse')
 const { getCruxData } = require('../psi')
+const FieldAudit = require('./field-audit')
 
-class CruxFcpAudit extends Audit {
+class FieldFcpAudit extends FieldAudit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -40,31 +41,15 @@ class CruxFcpAudit extends Audit {
     }
     const FCP = json.loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
 
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
-      { key: 'proportion', itemType: 'text', text: 'Proportion' },
-      { key: 'min', itemType: 'text', text: 'Min' },
-      { key: 'max', itemType: 'text', text: 'Max' }
-    ]
-
-    /** @type {LH.Audit.Details.Table['items']} */
-    const items = FCP.distributions.map(({ min, max, proportion }) => {
-      return {
-        min: `${(min / 1000).toFixed(1)} sec`,
-        max: `${max ? (max / 1000).toFixed(1) : '60'} sec`,
-        proportion: `${(proportion * 100).toFixed(1)} %`
-      }
-    })
-
     const numericValue = FCP.percentile
     const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
     return {
       score,
       numericValue,
       displayValue: `${(numericValue / 1000).toFixed(1)} s`,
-      details: Audit.makeTableDetails(headings, items)
+      details: FieldAudit.makeTableDistributions(FCP.distributions)
     }
   }
 }
 
-module.exports = CruxFcpAudit
+module.exports = FieldFcpAudit
