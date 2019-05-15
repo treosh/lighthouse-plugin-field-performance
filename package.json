@@ -20,7 +20,8 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p ."
+    "test": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p .",
+    "test-run": "node ./test/test-run.js"
   },
   "dependencies": {
     "node-fetch": "^2.5.0"

@@ -9,7 +9,7 @@ class FieldFcpAudit extends FieldAudit {
     return {
       id: 'field-fcp',
       title: 'First Contentful Paint',
-      description: 'First Contentful Paint',
+      description: 'First Contentful Paint marks the time at which the first text or image is painted.',
       failureTitle: '',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings']
