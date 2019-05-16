@@ -7,8 +7,19 @@
 ## Usage
 
 - Install plugin `npm install lighthouse-plugin-field-performance`
-- Pass plugin to lighthouse `lighthouse https://example.com --plugins=lighthouse-plugin-field-performance`
+- Pass plugin to lighthouse `lighthouse https://treo.sh --plugins=lighthouse-plugin-field-performance`
+- Pass PSI token with config `lighthouse https://treo.sh --plugins=lighthouse-plugin-field-performance --config-path=./config.js`
 
+`config.js`
+
+```js
+module.exports = {
+  extends: 'lighthouse:default',
+  settings: {
+    psiToken: '0123456789', // real PSI token
+  },
+};
+```
 ## Development
 
 Docs: https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md

@@ -1,4 +1,3 @@
-const { Audit } = require('lighthouse')
 const FieldAudit = require('./field-audit')
 
 class FieldFcpAudit extends FieldAudit {
@@ -10,9 +9,7 @@ class FieldFcpAudit extends FieldAudit {
       id: 'field-fcp',
       title: 'First Contentful Paint',
       description: 'First Contentful Paint marks the time at which the first text or image is painted.',
-      failureTitle: '',
-      scoreDisplayMode: 'numeric',
-      requiredArtifacts: ['URL', 'settings']
+      ...FieldAudit.defaultMeta
     }
   }
 
@@ -41,16 +38,8 @@ class FieldFcpAudit extends FieldAudit {
           does not have sufficient real-world ${FieldFcpAudit.meta.title} data for this page.`
       }
     }
-    const FCP = loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
 
-    const numericValue = FCP.percentile
-    const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
-    return {
-      score,
-      numericValue,
-      displayValue: `${(numericValue / 1000).toFixed(1)} s`,
-      details: FieldAudit.makeTableDistributions(FCP.distributions)
-    }
+    return FieldAudit.makeAuditProduct(context, { fieldMetric: loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS })
   }
 }
 
