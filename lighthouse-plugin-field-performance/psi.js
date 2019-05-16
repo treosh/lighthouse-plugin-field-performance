@@ -12,14 +12,14 @@ const requests = new Map()
  * Cache results and parse crux data.
  *
  * @param {string} url
- * @param {string} strategy
+ * @param {Object} options
  * @returns {Promise<Object>}
  */
 
-exports.getCruxData = async function(url, strategy) {
+exports.getCruxData = async function(url, { strategy, psiToken }) {
   const key = url + strategy
   if (!requests.has(key)) {
-    requests.set(key, runPsi({ url, strategy }))
+    requests.set(key, runPsi({ url, strategy, psiToken }))
   }
   const json = await requests.get(key)
   return json.error
@@ -37,10 +37,12 @@ exports.getCruxData = async function(url, strategy) {
  */
 
 async function runPsi(opts, retryCounter = 0) {
-  const { url, strategy } = opts
+  const { url, strategy, psiToken } = opts
   const category = 'best-practices' // no support for "none", fastest category
-  const params = stringify({ url, strategy, category })
-  const res = await fetch(runPagespeedUrl + '?' + params)
+  const params = { url, strategy, category }
+  if (psiToken) params.key = psiToken
+  const strParams = stringify(params)
+  const res = await fetch(runPagespeedUrl + '?' + strParams)
   if (res.status === 200) return res.json()
 
   const isJson = res.headers.get('content-type').includes('application/json')

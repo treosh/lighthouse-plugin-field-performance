@@ -1,7 +1,6 @@
-const { Audit } = require('lighthouse')
 const FieldAudit = require('./field-audit')
 
-class FieldFidAudit extends Audit {
+class FieldFidAudit extends FieldAudit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -10,9 +9,7 @@ class FieldFidAudit extends Audit {
       id: 'field-fid',
       title: 'First Input Delay',
       description: 'First Input Delay shows how fast UI responded after the first interaction.',
-      failureTitle: '',
-      scoreDisplayMode: 'numeric',
-      requiredArtifacts: ['URL', 'settings']
+      ...FieldAudit.defaultMeta
     }
   }
 
@@ -41,16 +38,11 @@ class FieldFidAudit extends Audit {
           does not have sufficient real-world ${FieldFidAudit.meta.title} data for this page.`
       }
     }
-    const FID = loadingExperience.metrics.FIRST_INPUT_DELAY_MS
 
-    const numericValue = FID.percentile
-    const score = Audit.computeLogNormalScore(numericValue, context.options.scorePODR, context.options.scoreMedian)
-    return {
-      score,
-      numericValue,
-      displayValue: `${numericValue} ms`,
-      details: FieldAudit.makeTableDistributions(FID.distributions)
-    }
+    return FieldAudit.makeAuditProduct(context, {
+      fieldMetric: loadingExperience.metrics.FIRST_INPUT_DELAY_MS,
+      timeUnit: 'ms'
+    })
   }
 }
 
