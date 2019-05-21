@@ -1,16 +1,39 @@
-const { exec } = require('child_process')
+const { resolve } = require('path')
+const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
 const data = require('./mock/load-experiance')
+const config = require('./mock/custom-config')
 
-// @todo mock getCruxData to return data for testing purposes
+const stubPsi = data => {
+  const resolved = resolve(__dirname, '../lighthouse-plugin-field-performance/psi.js')
+  require.cache[resolved] = {
+    id: resolved,
+    filename: resolved,
+    loaded: true,
+    exports: {
+      getCruxData: () => {
+        return data
+      }
+    }
+  }
+}
 
-;(() => {
-  // lighthouse has weird requirements for plugin resolution,
-  // because of this, all source is stored in lighthouse-plugin-field-performance folder, so it's testable locally
-  exec('npx lighthouse https://treo.sh --plugins=lighthouse-plugin-field-performance --config-path=./test/mock/custom-config.js --view --chrome-flags="--headless" --output-path=./results/apple.html', (err, stdout, stderr) => {
-    if (err) console.log(err)
-    console.log(stdout)
-
+;(async () => {
+  try {
+    stubPsi(data)
+    await runLighthouse(
+      'https://treo.sh',
+      {
+        output: ['html'],
+        outputPath: './results/treo.sh.html',
+        view: true,
+        plugins: ['lighthouse-plugin-field-performance'],
+        chromeFlags: '--headless'
+      },
+      config
+    )
     process.exit(0)
-  })
+  } catch (e) {
+    console.log(e)
+    process.exit(1)
+  }
 })()
-
