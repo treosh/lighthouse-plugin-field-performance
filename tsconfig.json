@@ -7,5 +7,5 @@
     "checkJs": true,
     "strict": true
   },
-  "include": ["./lighthouse-plugin-crux/**/*.js", "./types/*.d.ts", "./node_modules/**/*.d.ts"]
+  "include": ["lighthouse-plugin-field-performance", "types", "node_modules/lighthouse/**/*.d.ts"]
 }
