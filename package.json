@@ -22,7 +22,8 @@
   "scripts": {
     "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p .",
     "mock-run": "node ./script/mock-run.js",
-    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html"
+    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html",
+    "unit-test": "ava"
   },
   "dependencies": {
     "node-fetch": "^2.5.0"
@@ -32,6 +33,8 @@
   },
   "devDependencies": {
     "devtools-protocol": "0.0.661990",
+    "@types/node": "^10.14.6",
+    "ava": "^1.4.1",
     "lighthouse": "^5.0.0",
     "prettier": "^1.17.0",
     "typescript": "^3.4.5"

@@ -1,25 +1,11 @@
-const { resolve } = require('path')
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
-const data = require('./mock/load-experiance')
+const data = require('../test/fixtures/load-experiance')
 const config = require('./mock/custom-config')
-
-const stubPsi = data => {
-  const resolved = resolve(__dirname, '../lighthouse-plugin-field-performance/psi.js')
-  require.cache[resolved] = {
-    id: resolved,
-    filename: resolved,
-    loaded: true,
-    exports: {
-      getCruxData: () => {
-        return data
-      }
-    }
-  }
-}
+const { stubPSI } = require('./utils')
 
 ;(async () => {
   try {
-    stubPsi(data)
+    stubPSI(data)
     await runLighthouse(
       'https://www.bbc.com/news',
       {
