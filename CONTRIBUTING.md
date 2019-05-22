@@ -1,16 +1,7 @@
-- [How to Contribute](#how-to-contribute)
-  * [Getting setup](#getting-setup)
-  * [Code reviews](#code-reviews)
-  * [Code Style](#code-style)
-  * [Commit Messages](#commit-messages)
- 
-
 # How to Contribute
 
 First of all, thank you for your interest in lighthouse-plugin-field-performance!
 We'd love to accept your patches and contributions!
-
-## Getting setup
 
 ## Development
 
@@ -29,7 +20,7 @@ npm install
 3. Run plugin
 
 ```bash
-npm run test-run
+npm run test-run https://www.apple.com
 ```
 
 > Plugin docs: https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md
@@ -43,27 +34,11 @@ information on using pull requests.
 
 ## Code Style
 
-- Coding style is fully defined in [.prettierrc](https://github.com/treosh/lighthouse-plugin-field-performance/blob/master/.prettierrc)
--We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
+Coding style is fully defined in [.prettierrc](./.prettierrc).
+We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
 
 To run code linter, use:
 
 ```bash
-npm run lint
+npm test
 ```
-
-## Commit Messages
-
-Commit messages should follow the Semantic Commit Messages format:
-
-```
-label(namespace): title
-```
-- `fix` - bug fixes.
-- `feat` - features.
-- `docs` - changes to docs.
-- `test` - changes to tests infrastructure.
-- `style` - code style: spaces/alignment/wrapping etc.
-- `chore` - build-related work, e.g. doclint changes / travis / appveyor.
-
-Disclaimer: Based on [Puppeteer Contributing Guidelines](https://github.com/GoogleChrome/puppeteer/blob/v1.16.0/CONTRIBUTING.md).

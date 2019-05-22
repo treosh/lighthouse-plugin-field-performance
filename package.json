@@ -20,8 +20,7 @@
     "first input delay"
   ],
   "scripts": {
-    "postinstall": "mkdir ./results",
-    "lint": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p .",
+    "test": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p .",
     "test-run": "node ./test/test-run.js"
   },
   "dependencies": {
