@@ -15,7 +15,8 @@ const requests = new Map()
 
 exports.getCruxData = async (artifacts, context) => {
   const { URL, settings } = artifacts
-  const { psiToken } = context.settings
+  // @ts-ignore
+  const psiToken = context.settings.psiToken || null
   const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
   const url = URL.finalUrl
   const key = url + strategy
@@ -41,10 +42,10 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
   const numericValue = metricValue.percentile
   const score = Audit.computeLogNormalScore(numericValue, options.scorePODR, options.scoreMedian)
 
-  if (timeUnit === 'sec') {
-    displayValue = `${(numericValue / 1000).toFixed(1)} s`
+  if (isMs(timeUnit)) {
+    displayValue = `${10 * Math.round(numericValue / 10)} ms`
   } else {
-    displayValue = `${numericValue} ms`
+    displayValue = `${(numericValue / 1000).toFixed(1)} s`
   }
 
   return {
@@ -92,7 +93,6 @@ exports.createErrorResult = err => {
  */
 
 function createDistributionsTable({ distributions }, timeUnit) {
-  const isMs = timeUnit === 'ms'
   const headings = [
     { key: 'category', itemType: 'text', text: 'Category' },
     { key: 'distribution', itemType: 'text', text: 'Distribution' }
@@ -100,11 +100,11 @@ function createDistributionsTable({ distributions }, timeUnit) {
 
   const items = distributions.map(({ min, max, proportion }, index) => {
     const item = {}
-    const normMin = isMs ? min : (min / 1000).toFixed(1)
-    const normMax = isMs ? max : max ? (max / 1000).toFixed(1) : null
+    const normMin = isMs(timeUnit) ? min : (min / 1000).toFixed(1)
+    const normMax = isMs(timeUnit) ? max : max ? (max / 1000).toFixed(1) : null
 
     if (min === 0) {
-      item.category = `Fast (less than ${normMax}${timeUnit})`
+      item.category = `Fast (faster than ${normMax}${timeUnit})`
     } else if (max && min === distributions[index - 1].max) {
       item.category = `Average (from ${normMin}${timeUnit} to ${normMax}${timeUnit})`
     } else {
@@ -117,4 +117,15 @@ function createDistributionsTable({ distributions }, timeUnit) {
   })
 
   return Audit.makeTableDetails(headings, items)
+}
+
+/**
+ * Check if `timeUnit` is in miliseconds
+ *
+ * @param {string} timeUnit
+ * @return {boolean}
+ */
+
+function isMs(timeUnit) {
+  return timeUnit === 'ms'
 }
