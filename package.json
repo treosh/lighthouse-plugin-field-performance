@@ -20,8 +20,9 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p .",
-    "test-run": "node ./test/test-run.js"
+    "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p .",
+    "mock-run": "node ./script/mock-run.js",
+    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --quiet --chrome-flags='--headless' --output-path=./results/result.html"
   },
   "dependencies": {
     "node-fetch": "^2.5.0"

@@ -46,7 +46,7 @@ class FieldAudit extends Audit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<Object>|Promise<LH.Audit.Product>}
+   * @return {Promise<LH.Audit.Product>}
    */
   static async getData(artifacts, context) {
     const { URL, settings } = artifacts

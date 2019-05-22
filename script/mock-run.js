@@ -21,10 +21,10 @@ const stubPsi = data => {
   try {
     stubPsi(data)
     await runLighthouse(
-      'https://treo.sh',
+      'https://www.bbc.com/news',
       {
         output: ['html'],
-        outputPath: './results/treo.sh.html',
+        outputPath: './results/bbc.com.html',
         view: true,
         plugins: ['lighthouse-plugin-field-performance'],
         chromeFlags: '--headless'

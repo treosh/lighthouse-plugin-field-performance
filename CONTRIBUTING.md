@@ -1,26 +1,21 @@
 # How to Contribute
 
-First of all, thank you for your interest in lighthouse-plugin-field-performance!
+First of all, thank you for your interest in `lighthouse-plugin-field-performance`!
 We'd love to accept your patches and contributions!
 
 ## Development
 
-1. Clone this repository
-
-```bash
-git clone https://github.com/treosh/lighthouse-plugin-field-performance && lighthouse-plugin-field-performance
-```
-
-2. Install dependencies
+1. Install dependencies
 
 ```bash
 npm install
 ```
 
-3. Run plugin
+1. Run plugin
 
 ```bash
-npm run test-run https://www.apple.com
+npm run test-run https://www.apple.com # test plugin with the fetch of PSI API
+npm run mock-run # test UI with moch data
 ```
 
 > Plugin docs: https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md

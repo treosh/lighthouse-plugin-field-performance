@@ -31,7 +31,7 @@ exports.getCruxData = async function(url, { strategy, psiToken }) {
  * Run PSI API.
  * https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed
  *
- * @param {{url: string, strategy: string}} opts
+ * @param {{url: string, strategy: string, psiToken: string}} opts
  * @param {number} [retryCounter]
  * @returns {Promise<Object>}
  */
@@ -39,8 +39,7 @@ exports.getCruxData = async function(url, { strategy, psiToken }) {
 async function runPsi(opts, retryCounter = 0) {
   const { url, strategy, psiToken } = opts
   const category = 'best-practices' // no support for "none", fastest category
-  const params = { url, strategy, category }
-  if (psiToken) params.key = psiToken
+  const params = { url, strategy, category, key: psiToken || undefined }
   const strParams = stringify(params)
   const res = await fetch(runPagespeedUrl + '?' + strParams)
   if (res.status === 200) return res.json()
