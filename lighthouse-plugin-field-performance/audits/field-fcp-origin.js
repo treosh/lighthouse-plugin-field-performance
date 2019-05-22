@@ -1,6 +1,12 @@
-const FieldAudit = require('./field-audit')
+const { Audit } = require('lighthouse')
+const {
+  getCruxData,
+  createNotApplicableResult,
+  createValueResult,
+  createErrorResult
+} = require('../utils/audit-helpers')
 
-class FieldFcpOriginAudit extends FieldAudit {
+class FieldFcpOriginAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -9,7 +15,9 @@ class FieldFcpOriginAudit extends FieldAudit {
       id: 'field-fcp-origin',
       title: 'First Contentful Paint',
       description: 'First Contentful Paint marks the time at which the first text or image is painted.',
-      ...FieldAudit.defaultMeta
+      failureTitle: '',
+      scoreDisplayMode: 'numeric',
+      requiredArtifacts: ['URL', 'settings']
     }
   }
 
@@ -29,19 +37,13 @@ class FieldFcpOriginAudit extends FieldAudit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const json = await FieldAudit.getData(artifacts, context)
-    const { originLoadingExperience } = json
-    if (!originLoadingExperience) {
-      return {
-        ...json,
-        explanation: `The Chrome User Experience Report 
-          does not have sufficient real-world ${FieldFcpOriginAudit.meta.title} data for this origin.`
-      }
+    try {
+      const { loadingExperience: ole } = await getCruxData(artifacts, context)
+      if (!ole) return createNotApplicableResult(FieldFcpOriginAudit.meta.title)
+      return createValueResult(ole.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', FieldFcpOriginAudit.defaultOptions)
+    } catch (err) {
+      return createErrorResult(err)
     }
-
-    return FieldAudit.makeAuditProduct(context, {
-      fieldMetric: originLoadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS
-    })
   }
 }
 

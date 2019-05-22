@@ -6,26 +6,10 @@ const { stringify } = require('querystring')
 const runPagespeedUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed'
 const retryDelay = 3000
 const maxRetries = 3
-const requests = new Map()
 
-/**
- * Cache results and parse crux data.
- *
- * @param {string} url
- * @param {Object} options
- * @returns {Promise<Object>}
- */
+// expose
 
-exports.getCruxData = async function(url, { strategy, psiToken }) {
-  const key = url + strategy
-  if (!requests.has(key)) {
-    requests.set(key, runPsi({ url, strategy, psiToken }))
-  }
-  const json = await requests.get(key)
-  return json.error
-    ? { error: json.error }
-    : { loadingExperience: json.loadingExperience, originLoadingExperience: json.originLoadingExperience }
-}
+module.exports = { runPsi }
 
 /**
  * Run PSI API.
@@ -33,13 +17,13 @@ exports.getCruxData = async function(url, { strategy, psiToken }) {
  *
  * @param {{url: string, strategy: string, psiToken: string}} opts
  * @param {number} [retryCounter]
- * @returns {Promise<Object>}
+ * @return {Promise<Object>}
  */
 
 async function runPsi(opts, retryCounter = 0) {
   const { url, strategy, psiToken } = opts
   const category = 'best-practices' // no support for "none", fastest category
-  const params = { url, strategy, category, key: psiToken || undefined }
+  const params = { url, strategy, category, ...(psiToken ? { key: psiToken } : {}) }
   const strParams = stringify(params)
   const res = await fetch(runPagespeedUrl + '?' + strParams)
   if (res.status === 200) return res.json()
@@ -65,7 +49,7 @@ async function runPsi(opts, retryCounter = 0) {
   /**
    * Retry PSI execution.
    *
-   * @returns {Promise<Object>}
+   * @return {Promise<Object>}
    */
 
   async function retry() {
