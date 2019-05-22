@@ -2,8 +2,8 @@
   "name": "lighthouse-plugin-field-performance",
   "version": "1.0.0",
   "description": "Lighthouse plugin to display field data",
-  "repository": "treosh/lighthouse-plugin-crux",
-  "author": "Aleksey Kulikov <alekseykulikov@me.com>",
+  "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
+  "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",
   "source": "lighthouse-plugin-field-performance/index.js",
   "files": [
