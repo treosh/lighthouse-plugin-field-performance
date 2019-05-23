@@ -1,4 +1,5 @@
 const { Audit } = require('lighthouse')
+const simpleFormatNumber = require('simple-format-number')
 const { runPsi } = require('./run-psi')
 
 // cache PSI requests
@@ -43,9 +44,9 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
   const score = Audit.computeLogNormalScore(numericValue, options.scorePODR, options.scoreMedian)
 
   if (isMs(timeUnit)) {
-    displayValue = `${10 * Math.round(numericValue / 10)} ms`
+    displayValue = `${formatValue(numericValue, { isMs: true })} ms`
   } else {
-    displayValue = `${(numericValue / 1000).toFixed(1)} s`
+    displayValue = `${formatValue(numericValue)} s`
   }
 
   return {
@@ -112,8 +113,8 @@ function createDistributionsTable({ distributions }, timeUnit) {
 
   const items = distributions.map(({ min, max, proportion }, index) => {
     const item = {}
-    const normMin = isMs(timeUnit) ? min : (min / 1000).toFixed(1)
-    const normMax = isMs(timeUnit) ? max : max ? (max / 1000).toFixed(1) : null
+    const normMin = formatValue(min, { isMs: isMs(timeUnit) })
+    const normMax = formatValue(max, { isMs: isMs(timeUnit) })
 
     if (min === 0) {
       item.category = `Fast (faster than ${normMax}${timeUnit})`
@@ -140,4 +141,18 @@ function createDistributionsTable({ distributions }, timeUnit) {
 
 function isMs(timeUnit) {
   return timeUnit === 'ms'
+}
+
+/**
+ * Format `value` to a readable string.
+ *
+ * @param {number} value
+ * @param {{ isMs?: boolean }} [opts]
+ * @return {string}
+ */
+
+function formatValue(value, { isMs = false } = {}) {
+  const val = isMs ? Math.round(value / 10) * 10 : parseFloat((value / 1000).toFixed(1))
+  const digits = Math.round(val) === val || isMs ? 0 : 1
+  return simpleFormatNumber(val, { fractionDigits: digits })
 }

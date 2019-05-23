@@ -31,7 +31,8 @@
     "snapshotDir": "test/snapshots"
   },
   "dependencies": {
-    "node-fetch": "^2.5.0"
+    "node-fetch": "^2.5.0",
+    "simple-format-number": "^0.1.2"
   },
   "peerDependencies": {
     "lighthouse": "^5.0.0"
