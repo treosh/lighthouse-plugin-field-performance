@@ -43,6 +43,10 @@ runLighthouse('https://www.apple.com', {
 })
 ```
 
-## License
+## Credits
 
-MIT © [Treo.sh](https://treo.sh)
+Sponsored by [Treo.sh - Page speed monitoring made easy](https://treo.sh).
+
+[![](https://travis-ci.org/treosh/lighthouse-plugin-field-performance.png)](https://travis-ci.org/treosh/lighthouse-plugin-field-performance)
+[![](https://img.shields.io/npm/v/lighthouse-plugin-field-performance.svg)](https://npmjs.org/package/lighthouse-plugin-field-performance)
+[![](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
