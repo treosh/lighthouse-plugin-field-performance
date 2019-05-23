@@ -13,14 +13,15 @@ const lhOptions = {
   plugins: ['lighthouse-plugin-field-performance']
 }
 
-const getTestReults = () => {
-  return JSON.parse(readFileSync(join(__dirname, '../results/test-results.json'), 'utf8'))
+const getTestResults = resName => {
+  return JSON.parse(readFileSync(join(__dirname, '../results', resName), 'utf8'))
 }
 
 serial('Measure field perf for site in CruX', async t => {
+  const resName = 'in-field.json'
   stubPSI(loadExperienceInCrUX)
-  await runLighthouse('https://google.com/', lhOptions)
-  const { audits, categories } = getTestReults()
+  await runLighthouse('https://google.com/', { ...lhOptions, outputPath: `./results/${resName}` })
+  const { audits, categories } = getTestResults(resName)
   t.snapshot(audits['field-fcp'])
   t.snapshot(audits['field-fid'])
   t.snapshot(audits['field-fcp-origin'])
@@ -29,9 +30,10 @@ serial('Measure field perf for site in CruX', async t => {
 })
 
 serial('Measure field perf for site site not in CruX', async t => {
+  const resName = 'not-in-field.json'
   stubPSI(loadExperienceNotInCrUX)
-  await runLighthouse('https://example.com/', lhOptions)
-  const { audits, categories } = getTestReults()
+  await runLighthouse('https://example.com/', { ...lhOptions, outputPath: `./results/${resName}` })
+  const { audits, categories } = getTestResults(resName)
   t.snapshot(audits['field-fcp'])
   t.snapshot(audits['field-fid'])
   t.snapshot(audits['field-fcp-origin'])

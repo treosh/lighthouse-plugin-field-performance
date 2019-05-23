@@ -3,7 +3,8 @@ const {
   getCruxData,
   createNotApplicableResult,
   createValueResult,
-  createErrorResult
+  createErrorResult,
+  isResultsInField
 } = require('../utils/audit-helpers')
 
 class FieldFcpOriginAudit extends Audit {
@@ -38,8 +39,8 @@ class FieldFcpOriginAudit extends Audit {
    */
   static async audit(artifacts, context) {
     try {
-      const { loadingExperience: ole } = await getCruxData(artifacts, context)
-      if (!ole) return createNotApplicableResult(FieldFcpOriginAudit.meta.title)
+      const { originLoadingExperience: ole } = await getCruxData(artifacts, context)
+      if (!isResultsInField(ole)) return createNotApplicableResult(FieldFcpOriginAudit.meta.title)
       return createValueResult(ole.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', FieldFcpOriginAudit.defaultOptions)
     } catch (err) {
       return createErrorResult(err)

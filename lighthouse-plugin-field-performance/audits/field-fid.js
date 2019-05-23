@@ -3,7 +3,8 @@ const {
   getCruxData,
   createNotApplicableResult,
   createValueResult,
-  createErrorResult
+  createErrorResult,
+  isResultsInField
 } = require('../utils/audit-helpers')
 
 class FieldFidAudit extends Audit {
@@ -39,7 +40,7 @@ class FieldFidAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const { loadingExperience: le } = await getCruxData(artifacts, context)
-      if (!le) return createNotApplicableResult(FieldFidAudit.meta.title)
+      if (!isResultsInField(le)) return createNotApplicableResult(FieldFidAudit.meta.title)
       return createValueResult(le.metrics.FIRST_INPUT_DELAY_MS, 'ms', FieldFidAudit.defaultOptions)
     } catch (err) {
       return createErrorResult(err)
