@@ -3,8 +3,8 @@ const { readFileSync } = require('fs')
 const { join } = require('path')
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
 const { stubPSI } = require('./utils/stub-psi')
-const loadExperienceInCrUX = require('./fixtures/load-experiance')
-const loadExperienceNotInCrUX = require('./fixtures/load-experiance-not-in-crux')
+const loadExperienceInCrUX = require('./fixtures/load-experience.json')
+const loadExperienceNotInCrUX = require('./fixtures/load-experience-not-in-crux.json')
 
 const lhOptions = {
   output: ['json'],
