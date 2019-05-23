@@ -15,14 +15,18 @@ const lhOptions = {
   plugins: ['lighthouse-plugin-field-performance']
 }
 
-const getTestReults = () => {
-  return JSON.parse(readFileSync(join(__dirname, '../results/test-results.json'), 'utf8'))
+const getTestResults = resName => {
+  return JSON.parse(readFileSync(join(__dirname, '../results', resName), 'utf8'))
 }
 
 serial('Measure field perf for site in CruX', async t => {
+  const resName = 'in-field.json'
   stubPSI(loadExperienceInCrUX)
-  await runLighthouse('https://google.com/', lhOptions)
-  const { audits } = getTestReults()
+  await runLighthouse('https://google.com/', {
+    ...lhOptions,
+    outputPath: `./results/${resName}`,
+  })
+  const { audits } = getTestResults(resName)
   t.deepEqual(audits['field-fcp'], expectedAuditInField['field-fcp'])
   t.deepEqual(audits['field-fid'], expectedAuditInField['field-fid'])
   t.deepEqual(audits['field-fcp-origin'], expectedAuditInField['field-fcp-origin'])
@@ -30,9 +34,13 @@ serial('Measure field perf for site in CruX', async t => {
 })
 
 serial('Measure field perf for site site not in CruX', async t => {
+  const resName = 'not-in-field.json'
   stubPSI(loadExperienceNotInCrUX)
-  await runLighthouse('https://example.com', lhOptions)
-  const { audits } = getTestReults()
+  await runLighthouse('https://google.com/', {
+    ...lhOptions,
+    outputPath: `./results/${resName}`,
+  })
+  const { audits } = getTestResults(resName)
   t.deepEqual(audits['field-fcp'], expectedAuditsNotInField['field-fcp'])
   t.deepEqual(audits['field-fid'], expectedAuditsNotInField['field-fid'])
   t.deepEqual(audits['field-fcp-origin'], expectedAuditsNotInField['field-fcp-origin'])

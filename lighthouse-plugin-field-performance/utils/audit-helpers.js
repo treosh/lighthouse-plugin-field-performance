@@ -87,6 +87,17 @@ exports.createErrorResult = err => {
 }
 
 /**
+ * Checks if loading experience exists in field
+ *
+ * @param {LPFP.LoadingExperience} le
+ * @return {boolean}
+ */
+
+exports.isResultsInField = le => {
+  return !!le && Boolean(Object.values(le.metrics).length)
+}
+
+/**
  * @param {LPFP.MetricValue} metricValue
  * @param {string} timeUnit
  * @return {Object}
