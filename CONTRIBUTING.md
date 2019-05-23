@@ -1,69 +1,39 @@
-- [How to Contribute](#how-to-contribute)
-  * [Getting setup](#getting-setup)
-  * [Code reviews](#code-reviews)
-  * [Code Style](#code-style)
-  * [Commit Messages](#commit-messages)
- 
-
 # How to Contribute
 
-First of all, thank you for your interest in lighthouse-plugin-field-performance!
+First of all, thank you for your interest in `lighthouse-plugin-field-performance`!
 We'd love to accept your patches and contributions!
 
-## Getting setup
-
-## Development
-
-1. Clone this repository
-
-```bash
-git clone https://github.com/treosh/lighthouse-plugin-field-performance && lighthouse-plugin-field-performance
-```
-
-2. Install dependencies
+#### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-3. Run plugin
+#### 2. Run plugin
 
 ```bash
-npm run test-run
+npm run test-run https://www.apple.com # test plugin with a real PSI API response
+npm run mock-run # test UI with mock data
 ```
 
-> Plugin docs: https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md
+#### 3. Improve the plugin
 
-## Code reviews
+Write your patch. Improve the plugin to help capture Field Performance.
 
-All submissions, including submissions by project members, require review. We
-use GitHub pull requests for this purpose. Consult
-[GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
-information on using pull requests.
+Helpful links:
 
-## Code Style
+- [Plugin docs](https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md)
+- [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights)
+- [PSI API](https://developers.google.com/speed/docs/insights/v5/get-started)
 
-- Coding style is fully defined in [.prettierrc](https://github.com/treosh/lighthouse-plugin-field-performance/blob/master/.prettierrc)
--We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
+#### 4. Tests and linters
 
-To run code linter, use:
+Coding style is fully defined in [.prettierrc](./.prettierrc).
+We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript) for linting and annotations.
 
 ```bash
-npm run lint
+npm test # run all linters && tests
+npx tsc -p . # run typescript checks
+npx ava test/index.js # run just AVA tests
+npx ava test/index.js -u # update AVA snapshots
 ```
-
-## Commit Messages
-
-Commit messages should follow the Semantic Commit Messages format:
-
-```
-label(namespace): title
-```
-- `fix` - bug fixes.
-- `feat` - features.
-- `docs` - changes to docs.
-- `test` - changes to tests infrastructure.
-- `style` - code style: spaces/alignment/wrapping etc.
-- `chore` - build-related work, e.g. doclint changes / travis / appveyor.
-
-Disclaimer: Based on [Puppeteer Contributing Guidelines](https://github.com/GoogleChrome/puppeteer/blob/v1.16.0/CONTRIBUTING.md).

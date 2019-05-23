@@ -1,6 +1,13 @@
-const FieldAudit = require('./field-audit')
+const { Audit } = require('lighthouse')
+const {
+  getCruxData,
+  createNotApplicableResult,
+  createValueResult,
+  createErrorResult,
+  isResultsInField
+} = require('../utils/audit-helpers')
 
-class FieldFidAudit extends FieldAudit {
+class FieldFidAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -8,8 +15,10 @@ class FieldFidAudit extends FieldAudit {
     return {
       id: 'field-fid',
       title: 'First Input Delay',
-      description: 'First Input Delay shows how fast UI responded after the first interaction.',
-      ...FieldAudit.defaultMeta
+      description:
+        'First Input Delay indicates how fast UI responded after the first interaction. The value represents the 95th percentile of the page traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
+      scoreDisplayMode: 'numeric',
+      requiredArtifacts: ['URL', 'settings']
     }
   }
 
@@ -29,20 +38,13 @@ class FieldFidAudit extends FieldAudit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const json = await FieldAudit.getData(artifacts, context)
-    const { loadingExperience } = json
-    if (!loadingExperience) {
-      return {
-        ...json,
-        explanation: `The Chrome User Experience Report 
-          does not have sufficient real-world ${FieldFidAudit.meta.title} data for this page.`
-      }
+    try {
+      const { loadingExperience: le } = await getCruxData(artifacts, context)
+      if (!isResultsInField(le)) return createNotApplicableResult(FieldFidAudit.meta.title)
+      return createValueResult(le.metrics.FIRST_INPUT_DELAY_MS, 'ms', FieldFidAudit.defaultOptions)
+    } catch (err) {
+      return createErrorResult(err)
     }
-
-    return FieldAudit.makeAuditProduct(context, {
-      fieldMetric: loadingExperience.metrics.FIRST_INPUT_DELAY_MS,
-      timeUnit: 'ms'
-    })
   }
 }
 

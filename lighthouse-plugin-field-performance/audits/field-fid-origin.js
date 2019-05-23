@@ -1,6 +1,13 @@
-const FieldAudit = require('./field-audit')
+const { Audit } = require('lighthouse')
+const {
+  getCruxData,
+  createNotApplicableResult,
+  createValueResult,
+  createErrorResult,
+  isResultsInField
+} = require('../utils/audit-helpers')
 
-class FieldFidOriginAudit extends FieldAudit {
+class FieldFidOriginAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -8,8 +15,10 @@ class FieldFidOriginAudit extends FieldAudit {
     return {
       id: 'field-fid-origin',
       title: 'First Input Delay',
-      description: 'First Input Delay shows how fast UI responded after the first interaction.',
-      ...this.defaultMeta
+      description:
+        'First Input Delay indicates how fast UI responded after the first interaction. The value represents the 95th percentile of all origin traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
+      scoreDisplayMode: 'numeric',
+      requiredArtifacts: ['URL', 'settings']
     }
   }
 
@@ -29,20 +38,13 @@ class FieldFidOriginAudit extends FieldAudit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const json = await FieldAudit.getData(artifacts, context)
-    const { originLoadingExperience } = json
-    if (!originLoadingExperience) {
-      return {
-        ...json,
-        explanation: `The Chrome User Experience Report 
-          does not have sufficient real-world ${FieldFidOriginAudit.meta.title} data for this origin.`
-      }
+    try {
+      const { originLoadingExperience: ole } = await getCruxData(artifacts, context)
+      if (!isResultsInField(ole)) return createNotApplicableResult(FieldFidOriginAudit.meta.title)
+      return createValueResult(ole.metrics.FIRST_INPUT_DELAY_MS, 'ms', FieldFidOriginAudit.defaultOptions)
+    } catch (err) {
+      return createErrorResult(err)
     }
-
-    return FieldAudit.makeAuditProduct(context, {
-      fieldMetric: originLoadingExperience.metrics.FIRST_INPUT_DELAY_MS,
-      timeUnit: 'ms'
-    })
   }
 }
 

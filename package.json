@@ -2,10 +2,13 @@
   "name": "lighthouse-plugin-field-performance",
   "version": "1.0.0",
   "description": "Lighthouse plugin to display field data",
-  "repository": "treosh/lighthouse-plugin-crux",
-  "author": "Aleksey Kulikov <alekseykulikov@me.com>",
+  "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
+  "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",
   "source": "lighthouse-plugin-field-performance/index.js",
+  "engines": {
+    "node": ">=10.13"
+  },
   "files": [
     "lighthouse-plugin-field-performance"
   ],
@@ -20,18 +23,24 @@
     "first input delay"
   ],
   "scripts": {
-    "postinstall": "mkdir ./results",
-    "lint": "prettier -c lighthouse-plugin-field-performance/** package.json README.md && tsc -p .",
-    "test-run": "node ./test/test-run.js"
+    "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p . && ava test/index.js",
+    "mock-run": "node ./test/mock-run.js",
+    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html"
+  },
+  "ava": {
+    "snapshotDir": "test/snapshots"
   },
   "dependencies": {
-    "node-fetch": "^2.5.0"
+    "node-fetch": "^2.5.0",
+    "simple-format-number": "^0.1.2"
   },
   "peerDependencies": {
     "lighthouse": "^5.0.0"
   },
   "devDependencies": {
+    "devtools-protocol": "0.0.661990",
     "@types/node": "^10.14.6",
+    "ava": "^1.4.1",
     "lighthouse": "^5.0.0",
     "prettier": "^1.17.0",
     "typescript": "^3.4.5"

@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "noEmit": true,
+    "moduleResolution": "node",
     "module": "commonjs",
     "target": "es2018",
     "allowJs": true,
     "checkJs": true,
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true
   },
-  "include": ["./lighthouse-plugin-crux/**/*.js", "./types/*.d.ts", "./node_modules/**/*.d.ts"]
+  "include": ["lighthouse-plugin-field-performance", "types", "test", "node_modules/lighthouse/**/*.d.ts"]
 }
