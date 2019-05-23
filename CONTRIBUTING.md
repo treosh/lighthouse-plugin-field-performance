@@ -14,26 +14,20 @@ npm install
 1. Run plugin
 
 ```bash
-npm run test-run https://www.apple.com # test plugin with the fetch of PSI API
-npm run mock-run # test UI with moch data
+npm run test-run https://www.apple.com # test plugin with a real PSI API response
+npm run mock-run # test UI with mock data
 ```
 
 > Plugin docs: https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md
 
-## Code reviews
-
-All submissions, including submissions by project members, require review. We
-use GitHub pull requests for this purpose. Consult
-[GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
-information on using pull requests.
-
-## Code Style
+1. Tests and linters
 
 Coding style is fully defined in [.prettierrc](./.prettierrc).
-We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript). Annotations are encouraged for all contributions.
-
-To run code linter, use:
+We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript) for linting and annotations.
 
 ```bash
-npm test
+npm test # run all linters && tests
+npx tsc -p . # run typescript checks
+npx ava test/index.js # run just AVA tests
+npx ava test/index.js -u # update AVA snapshots
 ```
