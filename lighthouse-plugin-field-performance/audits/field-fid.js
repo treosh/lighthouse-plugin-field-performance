@@ -15,8 +15,7 @@ class FieldFidAudit extends Audit {
     return {
       id: 'field-fid',
       title: 'First Input Delay',
-      description: 'First Input Delay shows how fast UI responded after the first interaction.',
-      failureTitle: '',
+      description: 'First Input Delay indicates how fast UI responded after the first interaction.',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings']
     }

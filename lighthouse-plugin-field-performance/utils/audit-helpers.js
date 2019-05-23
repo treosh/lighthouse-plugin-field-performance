@@ -24,7 +24,7 @@ exports.getCruxData = async (artifacts, context) => {
     requests.set(key, runPsi({ url, strategy, psiToken }))
   }
   const json = await requests.get(key)
-  if (json.error) throw new Error(json.error)
+  if (json.error) throw new Error(JSON.stringify(json.error))
   return { loadingExperience: json.loadingExperience, originLoadingExperience: json.originLoadingExperience }
 }
 
@@ -80,6 +80,7 @@ exports.createNotApplicableResult = title => {
  */
 
 exports.createErrorResult = err => {
+  console.log(err)
   return {
     score: null,
     errorMessage: err.toString()
