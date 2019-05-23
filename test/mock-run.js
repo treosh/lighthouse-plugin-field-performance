@@ -1,7 +1,13 @@
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
 const data = require('../test/fixtures/load-experiance')
-const config = require('./mock/custom-config')
-const { stubPSI } = require('./utils')
+const { stubPSI } = require('./utils/stub-psi')
+
+const config = {
+  extends: 'lighthouse:default',
+  settings: {
+    psiToken: '0123456789'
+  }
+}
 
 ;(async () => {
   try {

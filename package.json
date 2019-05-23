@@ -6,6 +6,9 @@
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",
   "source": "lighthouse-plugin-field-performance/index.js",
+  "engines": {
+    "node": ">=10.13"
+  },
   "files": [
     "lighthouse-plugin-field-performance"
   ],
@@ -20,10 +23,12 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p .",
-    "mock-run": "node ./script/mock-run.js",
-    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html",
-    "unit-test": "ava"
+    "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p . && ava test/index.js",
+    "mock-run": "node ./test/mock-run.js",
+    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html"
+  },
+  "ava": {
+    "snapshotDir": "test/snapshots"
   },
   "dependencies": {
     "node-fetch": "^2.5.0"
