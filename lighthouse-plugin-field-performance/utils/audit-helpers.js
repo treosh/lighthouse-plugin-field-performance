@@ -117,11 +117,11 @@ function createDistributionsTable({ distributions }, timeUnit) {
     const normMax = formatValue(max, { isMs: isMs(timeUnit) })
 
     if (min === 0) {
-      item.category = `Fast (faster than ${normMax}${timeUnit})`
+      item.category = `Fast (faster than ${normMax} ${timeUnit})`
     } else if (max && min === distributions[index - 1].max) {
-      item.category = `Average (from ${normMin}${timeUnit} to ${normMax}${timeUnit})`
+      item.category = `Average (from ${normMin} ${timeUnit} to ${normMax} ${timeUnit})`
     } else {
-      item.category = `Slow (longer than ${normMin}${timeUnit})`
+      item.category = `Slow (longer than ${normMin} ${timeUnit})`
     }
 
     item.distribution = `${(proportion * 100).toFixed()} %`
