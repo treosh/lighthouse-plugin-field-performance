@@ -12,7 +12,8 @@ npm install
 #### 2. Run plugin
 
 ```bash
-npm run test-run https://www.apple.com # test plugin with a real PSI API response
+npm run mobile-run https://www.apple.com/ # test plugin with a real PSI API response
+npm run desktop-run https://www.google.com/
 npm run mock-run # test UI with mock data
 ```
 

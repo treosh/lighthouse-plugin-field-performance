@@ -26,7 +26,8 @@
     "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p .",
     "ava": "mkdir -p results && ava test/index.js",
     "mock-run": "node ./test/mock-run.js",
-    "test-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html"
+    "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html",
+    "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --emulated-form-factor=desktop --chrome-flags='--headless' --output-path=./results/result.html"
   },
   "ava": {
     "snapshotDir": "test/snapshots"

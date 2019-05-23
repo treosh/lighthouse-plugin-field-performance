@@ -3,6 +3,8 @@
 Lighthouse plugin that displays the "field" performance of the page for real-world Chrome users over the last 30 days.
 This plugin extends the Lighthouse report with the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
 
+Check [Live Example](https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd) to see the Lighthouse report with the plugin.
+
 <img align="center" width="1094" src="https://user-images.githubusercontent.com/158189/58255406-35db9100-7d6d-11e9-841c-8fae55160fb5.png">
 
 ## Install
