@@ -1,1 +1,1 @@
-../plugin.js
+../index.js
