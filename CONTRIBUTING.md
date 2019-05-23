@@ -17,6 +17,8 @@ npm run desktop-run https://www.google.com/
 npm run mock-run # test UI with mock data
 ```
 
+`lighthouse-plugin-field-performance` folder is made of symlinks for a simple local testing.
+
 #### 3. Improve the plugin
 
 Write your patch. Improve the plugin to help capture Field Performance.

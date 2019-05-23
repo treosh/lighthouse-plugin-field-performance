@@ -10,5 +10,5 @@
     "noImplicitAny": false,
     "resolveJsonModule": true
   },
-  "include": ["lighthouse-plugin-field-performance", "types", "test", "node_modules/lighthouse/**/*.d.ts"]
+  "include": ["audits", "utils", "plugin.js", "types", "test", "node_modules/lighthouse/**/*.d.ts"]
 }

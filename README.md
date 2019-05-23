@@ -19,8 +19,8 @@ Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse)
 
 ### CLI
 
-- Pass plugin to lighthouse `lighthouse https://www.apple.com --plugins=lighthouse-plugin-field-performance`
-- Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config `lighthouse https://www.apple.com --plugins=lighthouse-plugin-field-performance --config-path=./config.js`
+- Pass plugin to lighthouse `npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance`
+- Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config `npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance --config-path=./config.js`
 
 `config.js`
 
