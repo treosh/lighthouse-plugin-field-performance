@@ -6,11 +6,11 @@ module.exports = {
     { path: 'lighthouse-plugin-field-performance/audits/field-fid-origin.js' }
   ],
   groups: {
-    origin: {
-      title: 'Summary of all pages served by origin'
-    },
     page: {
-      title: 'Page Summary'
+      title: 'Page summary'
+    },
+    origin: {
+      title: 'Origin summary'
     }
   },
   category: {

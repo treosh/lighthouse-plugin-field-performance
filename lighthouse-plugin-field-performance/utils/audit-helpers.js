@@ -108,7 +108,7 @@ exports.isResultsInField = le => {
 function createDistributionsTable({ distributions }, timeUnit) {
   const headings = [
     { key: 'category', itemType: 'text', text: 'Category' },
-    { key: 'distribution', itemType: 'text', text: 'Distribution' }
+    { key: 'distribution', itemType: 'text', text: 'Percent of traffic' }
   ]
 
   const items = distributions.map(({ min, max, proportion }, index) => {

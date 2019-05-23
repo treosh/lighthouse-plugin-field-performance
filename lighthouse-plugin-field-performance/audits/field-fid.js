@@ -15,7 +15,8 @@ class FieldFidAudit extends Audit {
     return {
       id: 'field-fid',
       title: 'First Input Delay',
-      description: 'First Input Delay indicates how fast UI responded after the first interaction.',
+      description:
+        'First Input Delay indicates how fast UI responded after the first interaction. The value represents the 95th percentile of the page traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings']
     }
