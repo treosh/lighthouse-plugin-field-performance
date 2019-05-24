@@ -108,7 +108,7 @@ exports.createErrorResult = err => {
  */
 
 exports.isResultsInField = le => {
-  return !!le && Boolean(Object.values(le.metrics).length)
+  return !!le && Boolean(Object.values(le.metrics || {}).length)
 }
 
 /**
