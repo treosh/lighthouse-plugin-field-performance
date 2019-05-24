@@ -25,10 +25,10 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c audits/** utils/** plugin.js script/** package.json README.md && tsc -p .",
-    "ava": "npm run init && ava test/index.js",
+    "test": "prettier -c audits/** utils/** plugin.js script/** package.json README.md && tsc -p . && npm run ava",
     "init": "mkdir -p results && ([ -L node_modules/lighthouse-plugin-field-performance ] || ln -s ../ node_modules/lighthouse-plugin-field-performance)",
-    "mock-run": "node ./test/mock-run.js",
+    "ava": "npm run init && ava test/index.js",
+    "mock-run": "npm run init && node ./test/mock-run.js",
     "mobile-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
     "desktop-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
   },
@@ -43,11 +43,12 @@
     "lighthouse": "^5.0.0"
   },
   "devDependencies": {
-    "devtools-protocol": "0.0.661990",
     "@types/node": "^10.14.6",
     "ava": "^1.4.1",
+    "devtools-protocol": "0.0.661990",
     "lighthouse": "^5.0.0",
     "prettier": "^1.17.0",
+    "sinon": "^7.3.2",
     "typescript": "^3.4.5"
   }
 }
