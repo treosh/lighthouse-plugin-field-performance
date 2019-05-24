@@ -26,10 +26,11 @@
   ],
   "scripts": {
     "test": "prettier -c audits/** utils/** plugin.js script/** package.json README.md && tsc -p .",
-    "ava": "mkdir -p results && ava test/index.js",
+    "ava": "npm run init && ava test/index.js",
+    "init": "mkdir -p results && ([ -L node_modules/lighthouse-plugin-field-performance ] || ln -s ../ node_modules/lighthouse-plugin-field-performance)",
     "mock-run": "node ./test/mock-run.js",
-    "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/result.html",
-    "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --emulated-form-factor=desktop --chrome-flags='--headless' --output-path=./results/result.html"
+    "mobile-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
+    "desktop-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
   },
   "ava": {
     "snapshotDir": "test/snapshots"
