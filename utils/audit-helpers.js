@@ -2,6 +2,18 @@ const { Audit } = require('lighthouse')
 const simpleFormatNumber = require('simple-format-number')
 const { runPsi } = require('./run-psi')
 
+/**
+ * @typedef {Object} LoadingExperience
+ * @property {string} id
+ * @property {{ FIRST_INPUT_DELAY_MS: MetricValue, FIRST_CONTENTFUL_PAINT_MS: MetricValue}} metrics
+ * @property {string} overall_category
+ * @property {string} initial_url
+ *
+ * @typedef {Object} MetricValue
+ * @property {number} percentile
+ * @property {{ min: number, max: number, proportion: number}[]} distributions
+ */
+
 // cache PSI requests
 
 const requests = new Map()
@@ -11,7 +23,7 @@ const requests = new Map()
  *
  * @param {LH.Artifacts} artifacts
  * @param {LH.Audit.Context} context
- * @return {Promise<{ loadingExperience: LPFP.LoadingExperience, originLoadingExperience: LPFP.LoadingExperience }>}
+ * @return {Promise<{ loadingExperience: LoadingExperience, originLoadingExperience: LoadingExperience }>}
  */
 
 exports.getCruxData = async (artifacts, context) => {
@@ -32,7 +44,7 @@ exports.getCruxData = async (artifacts, context) => {
 /**
  * Estimate value and create numeric results
  *
- * @param {LPFP.MetricValue} metricValue
+ * @param {MetricValue} metricValue
  * @param {string} timeUnit
  * @param {LH.Audit.ScoreOptions} options
  * @return {LH.Audit.Product}
@@ -91,7 +103,7 @@ exports.createErrorResult = err => {
 /**
  * Checks if loading experience exists in field
  *
- * @param {LPFP.LoadingExperience} le
+ * @param {LoadingExperience} le
  * @return {boolean}
  */
 
@@ -100,7 +112,7 @@ exports.isResultsInField = le => {
 }
 
 /**
- * @param {LPFP.MetricValue} metricValue
+ * @param {MetricValue} metricValue
  * @param {string} timeUnit
  * @return {Object}
  */
