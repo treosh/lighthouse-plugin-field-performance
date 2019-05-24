@@ -5,10 +5,10 @@
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",
-  "main": "lighthouse-plugin-field-performance/plugin.js",
   "engines": {
     "node": ">=10.13"
   },
+  "main": "lighthouse-plugin-field-performance/index.js",
   "files": [
     "lighthouse-plugin-field-performance"
   ],
@@ -23,7 +23,7 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c lighthouse-plugin-field-performance/** plugin.js script/** package.json README.md && tsc -p . && ava test/plugin.js",
+    "test": "prettier -c lighthouse-plugin-field-performance/** script/** package.json README.md && tsc -p . && ava test/index.js",
     "mock-run": "node ./test/mock-run.js",
     "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
     "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
