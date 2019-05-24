@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-plugin-field-performance",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Lighthouse plugin to display field data",
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
