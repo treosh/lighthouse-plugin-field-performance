@@ -38,6 +38,6 @@ We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Micros
 ```bash
 npm test # run all linters && tests
 npx tsc -p . # run typescript checks
-npm run ava # run just AVA tests
-npm run ava -u # update AVA snapshots
+npx ava test/plugin.js # run just AVA tests
+npx ava test/plugin.js -u # update AVA snapshots
 ```

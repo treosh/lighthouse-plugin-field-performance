@@ -5,14 +5,12 @@
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",
-  "source": "index.js",
+  "main": "lighthouse-plugin-field-performance/plugin.js",
   "engines": {
     "node": ">=10.13"
   },
   "files": [
-    "audits",
-    "utils",
-    "index.js"
+    "lighthouse-plugin-field-performance"
   ],
   "keywords": [
     "lighthouse",
@@ -25,12 +23,10 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c audits/** utils/** plugin.js script/** package.json README.md && tsc -p . && npm run ava",
-    "init": "mkdir -p results && ([ -L node_modules/lighthouse-plugin-field-performance ] || ln -s ../ node_modules/lighthouse-plugin-field-performance)",
-    "ava": "npm run init && ava test/index.js",
-    "mock-run": "npm run init && node ./test/mock-run.js",
-    "mobile-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
-    "desktop-run": "npm run init && lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
+    "test": "prettier -c lighthouse-plugin-field-performance/** plugin.js script/** package.json README.md && tsc -p . && ava test/plugin.js",
+    "mock-run": "node ./test/mock-run.js",
+    "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
+    "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
   },
   "ava": {
     "snapshotDir": "test/snapshots"

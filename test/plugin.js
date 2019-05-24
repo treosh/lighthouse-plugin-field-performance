@@ -3,7 +3,7 @@ const { readFileSync } = require('fs')
 const { join } = require('path')
 const sinon = require('sinon')
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
-const psi = require('../utils/run-psi')
+const psi = require('../lighthouse-plugin-field-performance/utils/run-psi')
 const loadExperienceInCrUX = require('./fixtures/load-experience.json')
 const loadExperienceNotInCrUX = require('./fixtures/load-experience-not-in-crux.json')
 

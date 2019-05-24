@@ -1,6 +1,6 @@
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
 const sinon = require('sinon')
-const psi = require('../utils/run-psi')
+const psi = require('../lighthouse-plugin-field-performance/utils/run-psi')
 const data = require('./fixtures/load-experience.json')
 
 const config = {
