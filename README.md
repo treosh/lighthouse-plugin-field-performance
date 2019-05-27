@@ -20,15 +20,16 @@ Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse)
 ### CLI
 
 - Pass plugin to lighthouse `npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance`
-- Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config `npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance --config-path=./config.js`
+- Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config `npx lighthouse https://www.apple.com/ --config-path=./config.js`
 
 `config.js`
 
 ```js
 module.exports = {
   extends: 'lighthouse:default',
+  plugins: ['lighthouse-plugin-field-performance'],
   settings: {
-    psiToken: '0123456789' // use your PSI token
+    psiToken: 'YOUR_REAL_TOKEN'
   }
 }
 ```
