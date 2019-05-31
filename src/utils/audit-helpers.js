@@ -21,8 +21,8 @@ const requests = new Map()
 /**
  * Cache results and parse crux data.
  *
- * @param {LH.Artifacts} artifacts
- * @param {LH.Audit.Context} context
+ * @param {Object} artifacts
+ * @param {Object} context
  * @return {Promise<{ loadingExperience: LoadingExperience, originLoadingExperience: LoadingExperience }>}
  */
 
@@ -46,8 +46,8 @@ exports.getCruxData = async (artifacts, context) => {
  *
  * @param {MetricValue} metricValue
  * @param {string} timeUnit
- * @param {LH.Audit.ScoreOptions} options
- * @return {LH.Audit.Product}
+ * @param {Object} options
+ * @return {Object}
  */
 
 exports.createValueResult = (metricValue, timeUnit, options) => {
@@ -73,7 +73,7 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
  * Create result when data does not exist.
  *
  * @param {string} title
- * @return {LH.Audit.Product}
+ * @return {Object}
  */
 
 exports.createNotApplicableResult = title => {
@@ -89,7 +89,7 @@ exports.createNotApplicableResult = title => {
  * Create error result.
  *
  * @param {Error} err
- * @return {LH.Audit.Product}
+ * @return {Object}
  */
 
 exports.createErrorResult = err => {

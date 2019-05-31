@@ -1,9 +1,9 @@
 module.exports = {
   audits: [
-    { path: 'lighthouse-plugin-field-performance/audits/field-fcp.js' },
-    { path: 'lighthouse-plugin-field-performance/audits/field-fid.js' },
-    { path: 'lighthouse-plugin-field-performance/audits/field-fcp-origin.js' },
-    { path: 'lighthouse-plugin-field-performance/audits/field-fid-origin.js' }
+    { path: 'lighthouse-plugin-field-performance/src/audits/field-fcp.js' },
+    { path: 'lighthouse-plugin-field-performance/src/audits/field-fid.js' },
+    { path: 'lighthouse-plugin-field-performance/src/audits/field-fcp-origin.js' },
+    { path: 'lighthouse-plugin-field-performance/src/audits/field-fid-origin.js' }
   ],
   groups: {
     page: {

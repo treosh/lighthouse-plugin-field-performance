@@ -3,7 +3,7 @@ const { readFileSync } = require('fs')
 const { join } = require('path')
 const sinon = require('sinon')
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
-const psi = require('../lighthouse-plugin-field-performance/utils/run-psi')
+const psi = require('../src/utils/run-psi')
 const loadExperienceInCrUX = require('./fixtures/load-experience.json')
 const loadExperienceNotInCrUX = require('./fixtures/load-experience-not-in-crux.json')
 
@@ -14,6 +14,7 @@ const lhOptions = {
   plugins: ['lighthouse-plugin-field-performance']
 }
 
+/** @param {string} resName */
 const getTestResults = resName => {
   return JSON.parse(readFileSync(join(__dirname, '../results', resName), 'utf8'))
 }

@@ -3,3 +3,6 @@ addons:
   chrome: stable
 node_js:
   - 10
+before_script:
+  - npm link
+  - npm link lighthouse-plugin-field-performance

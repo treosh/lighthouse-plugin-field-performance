@@ -9,7 +9,7 @@ const {
 
 class FieldFidOriginAudit extends Audit {
   /**
-   * @return {LH.Audit.Meta}
+   * @return {Object}
    */
   static get meta() {
     return {
@@ -23,7 +23,7 @@ class FieldFidOriginAudit extends Audit {
   }
 
   /**
-   * @return {LH.Audit.ScoreOptions}
+   * @return {Object}
    */
   static get defaultOptions() {
     return {
@@ -33,9 +33,9 @@ class FieldFidOriginAudit extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
-   * @return {Promise<LH.Audit.Product>}
+   * @param {Object} artifacts
+   * @param {Object} context
+   * @return {Promise<Object>}
    */
   static async audit(artifacts, context) {
     try {

@@ -36,6 +36,10 @@ Coding style is fully defined in [.prettierrc](./.prettierrc).
 We use [JSDoc](http://usejsdoc.org/) with [TypeScript](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript) for linting and annotations.
 
 ```bash
+# https://github.com/GoogleChrome/lighthouse/issues/9050#issuecomment-495678706
+npm link # create a global link for lighthouse-plugin-field-performance
+npm link lighthouse-plugin-field-performance # install the link locally
+
 npm test # run all linters && tests
 npx tsc -p . # run typescript checks
 npx ava test/index.js # run just AVA tests

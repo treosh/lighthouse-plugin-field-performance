@@ -7,8 +7,9 @@
     "allowJs": true,
     "checkJs": true,
     "strict": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
-  "include": ["lighthouse-plugin-field-performance", "types", "test", "node_modules/lighthouse/**/*.d.ts"]
+  "include": ["src", "types", "test"]
 }
