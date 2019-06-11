@@ -5,7 +5,7 @@ This plugin extends the Lighthouse report with the data from [Chrome UX Report](
 
 Check [Live Example](https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd) to see the Lighthouse report with the plugin.
 
-<img align="center" width="1094" src="https://user-images.githubusercontent.com/158189/58255406-35db9100-7d6d-11e9-841c-8fae55160fb5.png">
+<img align="center" width="956" src="https://user-images.githubusercontent.com/158189/59276751-34600300-8c5f-11e9-945b-75770a91d5de.png">
 
 ## Install
 

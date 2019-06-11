@@ -16,7 +16,7 @@ module.exports = {
   category: {
     title: 'Field Performance',
     description:
-      'These performance metrics show the performance of the page for real-world Chrome users over the last 30 days. Data is collected anonymously in the "field" and provided by Chrome UX Report. [Learn More](https://developers.google.com/web/tools/chrome-user-experience-report/)',
+      'These metrics show the performance of the page for real-world Chrome users over the last 30 days. Data is collected anonymously in the "field" and provided by Chrome UX Report. [Learn More](https://developers.google.com/web/tools/chrome-user-experience-report/)',
     auditRefs: [
       { id: 'field-fcp', weight: 1, group: 'page' },
       { id: 'field-fid', weight: 1, group: 'page' },
