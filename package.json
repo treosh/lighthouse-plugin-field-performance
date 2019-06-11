@@ -32,7 +32,7 @@
     "snapshotDir": "test/snapshots"
   },
   "dependencies": {
-    "node-fetch": "^2.5.0",
+    "node-fetch": "^2.6.0",
     "simple-format-number": "^0.1.2"
   },
   "peerDependencies": {
@@ -41,10 +41,10 @@
   "devDependencies": {
     "@types/node": "^10.14.6",
     "@types/sinon": "^7.0.12",
-    "ava": "^1.4.1",
-    "lighthouse": "^5.0.0",
-    "prettier": "^1.17.0",
+    "ava": "^2.1.0",
+    "lighthouse": "^5.1.0",
+    "prettier": "^1.18.2",
     "sinon": "^7.3.2",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.1"
   }
 }
