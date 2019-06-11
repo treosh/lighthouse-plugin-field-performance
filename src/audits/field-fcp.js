@@ -14,7 +14,7 @@ class FieldFcpAudit extends Audit {
   static get meta() {
     return {
       id: 'field-fcp',
-      title: 'First Contentful Paint',
+      title: 'First Contentful Paint (URL)',
       description:
         'First Contentful Paint marks the time at which the first text or image painted. The value represents the 90th percentile of the page traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
       scoreDisplayMode: 'numeric',
