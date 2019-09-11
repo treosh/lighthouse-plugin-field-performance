@@ -1,6 +1,6 @@
 const { Audit } = require('lighthouse')
 const {
-  getCruxData,
+  getLoadingExperience,
   createNotApplicableResult,
   createValueResult,
   createErrorResult,
@@ -39,7 +39,7 @@ class FieldFcpAudit extends Audit {
    */
   static async audit(artifacts, context) {
     try {
-      const { loadingExperience: le } = await getCruxData(artifacts, context)
+      const le = await getLoadingExperience(artifacts, context)
       if (!isResultsInField(le)) return createNotApplicableResult(FieldFcpAudit.meta.title)
       return createValueResult(le.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', FieldFcpAudit.defaultOptions)
     } catch (err) {
