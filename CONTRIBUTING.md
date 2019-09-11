@@ -18,7 +18,6 @@ npm link lighthouse-plugin-field-performance # add symlink to test the plugin lo
 
 npm run mobile-run https://www.apple.com/ # test plugin with a real PSI API response
 npm run desktop-run https://www.google.com/
-npm run mock-run # test UI with mock data
 ```
 
 `lighthouse-plugin-field-performance` folder is made of symlinks for a simple local testing.
