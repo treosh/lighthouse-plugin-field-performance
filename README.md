@@ -9,7 +9,7 @@ Check [Live Example](https://googlechrome.github.io/lighthouse/viewer/?gist=a688
 
 ## Install
 
-Requires `node.js >= 10` and `Lighthouse >= 5`.
+Requires `node.js 10+` and `Lighthouse 5+`.
 
 `npm install lighthouse-plugin-field-performance`
 

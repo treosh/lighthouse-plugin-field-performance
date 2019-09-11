@@ -39,12 +39,12 @@
     "lighthouse": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^10.14.6",
-    "@types/sinon": "^7.0.12",
-    "ava": "^2.1.0",
-    "lighthouse": "^5.1.0",
+    "@types/node": "10",
+    "@types/sinon": "^7.0.13",
+    "ava": "^2.3.0",
+    "lighthouse": "^5.2.0",
     "prettier": "^1.18.2",
-    "sinon": "^7.3.2",
-    "typescript": "^3.5.1"
+    "sinon": "^7.4.2",
+    "typescript": "^3.6.3"
   }
 }
