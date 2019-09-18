@@ -1,0 +1,17 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use node 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install, link plugin locally, and test
+        run: |
+          yarn install
+          yarn link
+          yarn link lighthouse-plugin-field-performance
+          yarn test
