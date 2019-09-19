@@ -1,26 +1,55 @@
 # lighthouse-plugin-field-performance
 
-Lighthouse plugin that displays the "field" performance of the page for real-world Chrome users over the last 30 days.
-This plugin extends the Lighthouse report with the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
+> Lighthouse plugin that displays "field" performance of your page using real-world data from by Chrome UX Report.
 
-Check [Live Example](https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd) to see the Lighthouse report with the plugin.
+[An example report](https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd):
 
-<img align="center" width="1094" src="https://user-images.githubusercontent.com/158189/58255406-35db9100-7d6d-11e9-841c-8fae55160fb5.png">
+<a href="https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd">
+  <img align="center" width="956" src="https://user-images.githubusercontent.com/158189/65156251-0bee5e80-da2f-11e9-876b-6faa0125646b.png">
+</a>
+
+<br />
+<br />
+
+This plugin adds a field performance section with the real-world data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's similar to [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), with an addion of overall score.
+
+The scoring algorithm uses [PSI recommendations](https://developers.google.com/speed/docs/insights/v5/about#faq) and applies estimation for First Contentful Paint and First Input Delay. (Notice: the origin values does not affect score).
+
+Check out the parity between Field & Lab performance on mobile:
+
+<img width="974" alt="Field & lab performance on mobile" src="https://user-images.githubusercontent.com/158189/65246644-4a4b5280-daef-11e9-9b1d-9158297a1f89.png">
+
+And on desktop:
+
+<img width="974" alt="Field & lab performance on desktop" src="https://user-images.githubusercontent.com/158189/65246645-4a4b5280-daef-11e9-92aa-e3495aebfa4b.png">
+
+Sometimes field data is missing because the URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement. Optimize, get more traffic, and measure again.
 
 ## Install
 
-Requires `node.js >= 10` and `Lighthouse >= 5`.
+Requires Node.js `10+` and Lighthouse `5+`.
 
-`npm install lighthouse-plugin-field-performance`
+```bash
+$ npm install lighthouse-plugin-field-performance
+```
 
 ## Usage
 
-Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse) or node.js.
+Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse) or Node.js.
 
 ### CLI
 
-- Pass plugin to lighthouse `npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance`
-- Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config `npx lighthouse https://www.apple.com/ --config-path=./config.js`
+Pass plugin to Lighthouse:
+
+```bash
+$ lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance
+```
+
+Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config:
+
+```bash
+$ lighthouse https://www.apple.com/ --config-path=./config.js
+```
 
 `config.js`
 

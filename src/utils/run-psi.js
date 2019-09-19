@@ -13,17 +13,19 @@ module.exports = { runPsi }
 
 /**
  * Run PSI API.
+ *
+ * `url:` or `origin:` prefixes uses to get data quickly.
+ * https://github.com/GoogleChrome/lighthouse/issues/1453#issuecomment-530163997
  * https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed
  *
- * @param {{url: string, strategy: string, psiToken: string}} opts
+ * @param {{url: string, strategy: string, category?: string, psiToken?: string}} opts
  * @param {number} [retryCounter]
  * @return {Promise<Object>}
  */
 
 async function runPsi(opts, retryCounter = 0) {
-  const { url, strategy, psiToken } = opts
-  const category = 'best-practices' // no support for "none", fastest category
-  const params = { url, strategy, category, ...(psiToken ? { key: psiToken } : {}) }
+  const { url, category, strategy, psiToken } = opts
+  const params = { url, strategy, ...(category ? { category } : {}), ...(psiToken ? { key: psiToken } : {}) }
   const strParams = stringify(params)
   const res = await fetch(runPagespeedUrl + '?' + strParams)
   if (res.status === 200) return res.json()

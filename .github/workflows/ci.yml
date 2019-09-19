@@ -1,0 +1,17 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use node 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install, link plugin locally, and test
+        run: |
+          npm install
+          npm link
+          npm link lighthouse-plugin-field-performance
+          npm test

@@ -23,22 +23,24 @@ const requests = new Map()
  *
  * @param {Object} artifacts
  * @param {Object} context
- * @return {Promise<{ loadingExperience: LoadingExperience, originLoadingExperience: LoadingExperience }>}
+ * @param {boolean} [isUrl]
+ * @return {Promise<LoadingExperience>}
  */
 
-exports.getCruxData = async (artifacts, context) => {
+exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
   const { URL, settings } = artifacts
   // @ts-ignore
   const psiToken = context.settings.psiToken || null
   const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
-  const url = URL.finalUrl
+  const prefix = isUrl ? 'url' : 'origin'
+  const url = `${prefix}:${URL.finalUrl}`
   const key = url + strategy
   if (!requests.has(key)) {
     requests.set(key, runPsi({ url, strategy, psiToken }))
   }
   const json = await requests.get(key)
   if (json.error) throw new Error(JSON.stringify(json.error))
-  return { loadingExperience: json.loadingExperience, originLoadingExperience: json.originLoadingExperience }
+  return json.loadingExperience
 }
 
 /**
