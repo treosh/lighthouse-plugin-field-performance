@@ -11,7 +11,7 @@ jobs:
           node-version: '10.x'
       - name: Install, link plugin locally, and test
         run: |
-          yarn install
-          yarn link
-          yarn link lighthouse-plugin-field-performance
-          yarn test
+          npm install
+          npm link
+          npm link lighthouse-plugin-field-performance
+          npm test
