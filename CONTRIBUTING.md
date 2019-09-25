@@ -16,8 +16,11 @@ npm install # install deps
 npm link # create a global link for lighthouse-plugin-field-performance
 npm link lighthouse-plugin-field-performance # add symlink to test the plugin locally
 
-npm run mobile-run https://www.apple.com/ # test plugin with a real PSI API response
-npm run desktop-run https://www.google.com/
+npm run mobile-run https://www.apple.com # test plugin with a real PSI API response
+npm run desktop-run https://www.google.com
+
+npm run mobile-run https://treo.sh # empty response
+npm run desktop-run https://treo.sh # just origin
 ```
 
 `lighthouse-plugin-field-performance` folder is made of symlinks for a simple local testing.
