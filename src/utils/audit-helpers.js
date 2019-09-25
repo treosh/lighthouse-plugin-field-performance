@@ -28,18 +28,22 @@ const requests = new Map()
  */
 
 exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
-  const { URL, settings } = artifacts
-  // @ts-ignore
   const psiToken = context.settings.psiToken || null
-  const strategy = settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
+  const strategy = artifacts.settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
   const prefix = isUrl ? 'url' : 'origin'
-  const url = `${prefix}:${URL.finalUrl}`
+  const { href, origin } = new URL(artifacts.URL.finalUrl)
+  const url = `${prefix}:${href}`
   const key = url + strategy
   if (!requests.has(key)) {
     requests.set(key, runPsi({ url, strategy, psiToken }))
   }
   const json = await requests.get(key)
   if (json.error) throw new Error(JSON.stringify(json.error))
+  // check, that URL response is not for origin
+  if (isUrl) {
+    const hasUrlExperience = json.loadingExperience && json.loadingExperience.id !== origin
+    return hasUrlExperience ? json.loadingExperience : null
+  }
   return json.loadingExperience
 }
 
