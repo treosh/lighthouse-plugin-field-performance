@@ -4,13 +4,10 @@ const {
   createNotApplicableResult,
   createValueResult,
   createErrorResult,
-  isResultsInField
+  isResultsInField,
 } = require('../utils/audit-helpers')
 
 class FieldFcpOriginAudit extends Audit {
-  /**
-   * @return {Object}
-   */
   static get meta() {
     return {
       id: 'field-fcp-origin',
@@ -18,17 +15,14 @@ class FieldFcpOriginAudit extends Audit {
       description:
         'First Contentful Paint marks the time at which the first text or image painted. The value represents the 90th percentile of all origin traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
       scoreDisplayMode: 'numeric',
-      requiredArtifacts: ['URL', 'settings']
+      requiredArtifacts: ['URL', 'settings'],
     }
   }
 
-  /**
-   * @return {Object}
-   */
   static get defaultOptions() {
     return {
       scorePODR: 1000,
-      scoreMedian: 2500
+      scoreMedian: 2500,
     }
   }
 

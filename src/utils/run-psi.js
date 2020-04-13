@@ -57,7 +57,7 @@ async function runPsi(opts, retryCounter = 0) {
   async function retry() {
     if (retryCounter >= maxRetries) throw new Error(`maximum retries reached: ${retryCounter}`)
     console.log('wait %sms and retry', retryDelay)
-    await new Promise(resolve => setTimeout(resolve, retryDelay))
+    await new Promise((resolve) => setTimeout(resolve, retryDelay))
     return runPsi(opts, retryCounter + 1)
   }
 }

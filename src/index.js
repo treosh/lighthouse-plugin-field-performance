@@ -3,15 +3,15 @@ module.exports = {
     { path: 'lighthouse-plugin-field-performance/src/audits/field-fcp.js' },
     { path: 'lighthouse-plugin-field-performance/src/audits/field-fid.js' },
     { path: 'lighthouse-plugin-field-performance/src/audits/field-fcp-origin.js' },
-    { path: 'lighthouse-plugin-field-performance/src/audits/field-fid-origin.js' }
+    { path: 'lighthouse-plugin-field-performance/src/audits/field-fid-origin.js' },
   ],
   groups: {
     page: {
-      title: 'Page summary'
+      title: 'Page summary',
     },
     origin: {
-      title: 'All pages summary served from this origin'
-    }
+      title: 'All pages summary served from this origin',
+    },
   },
   category: {
     title: 'Field Performance',
@@ -21,7 +21,7 @@ module.exports = {
       { id: 'field-fcp', weight: 1, group: 'page' },
       { id: 'field-fid', weight: 1, group: 'page' },
       { id: 'field-fcp-origin', weight: 0, group: 'origin' },
-      { id: 'field-fid-origin', weight: 0, group: 'origin' }
-    ]
-  }
+      { id: 'field-fid-origin', weight: 0, group: 'origin' },
+    ],
+  },
 }

@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-plugin-field-performance",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Lighthouse plugin to display field data",
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
@@ -23,7 +23,7 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c src/** script/** package.json README.md && tsc -p . && ava test/index.js",
+    "test": "prettier -c src/** test/** package.json README.md && tsc -p . && ava test/index.js",
     "mock-run": "node ./test/mock-run.js",
     "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
     "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
@@ -39,12 +39,12 @@
     "lighthouse": "^5.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.139",
+    "@types/lodash": "^4.14.149",
     "@types/node": "10",
-    "ava": "^2.4.0",
-    "lighthouse": "^5.4.0",
+    "ava": "^3.6.0",
+    "lighthouse": "^5.6.0",
     "lodash": "^4.17.15",
-    "prettier": "^1.18.2",
-    "typescript": "^3.6.3"
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
   }
 }

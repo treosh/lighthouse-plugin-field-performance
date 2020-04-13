@@ -9,15 +9,15 @@ const lhOptions = {
   outputPath: './results/test-results.json',
   chromeFlags: '--headless --enable-logging --no-sandbox',
   onlyCategories: ['lighthouse-plugin-field-performance'],
-  plugins: ['lighthouse-plugin-field-performance']
+  plugins: ['lighthouse-plugin-field-performance'],
 }
 
 /** @param {string} resName */
-const getTestResults = resName => {
+const getTestResults = (resName) => {
   return JSON.parse(readFileSync(join(__dirname, '../results', resName), 'utf8'))
 }
 
-serial('Measure field perf for site in CruX', async t => {
+serial('Measure field perf for site in CruX', async (t) => {
   const resName = 'in-field.json'
   await runLighthouse('https://example.com/', { ...lhOptions, outputPath: `./results/${resName}` })
 
@@ -28,7 +28,7 @@ serial('Measure field perf for site in CruX', async t => {
   checkResponse(audits['field-fid-origin'])
   t.snapshot(categories['lighthouse-plugin-field-performance'])
 
-  /** @param {object} audit */
+  /** @param {any} audit */
   function checkResponse(audit) {
     t.snapshot(omit(audit, ['details', 'displayValue', 'numericValue', 'score']))
     t.true(isNumber(audit.score) && audit.score > 0 && audit.score < 1)
@@ -36,12 +36,12 @@ serial('Measure field perf for site in CruX', async t => {
     t.true(isString(audit.displayValue))
     t.snapshot({
       ...audit.details,
-      items: audit.details.items.map(/** @param {object} item */ item => omit(item, ['distribution']))
+      items: audit.details.items.map(/** @param {object} item */ (item) => omit(item, ['distribution'])),
     })
   }
 })
 
-serial('Measure field perf for site site not in CruX', async t => {
+serial('Measure field perf for site site not in CruX', async (t) => {
   const resName = 'not-in-field.json'
   await runLighthouse('https://alekseykulikov.com/', { ...lhOptions, outputPath: `./results/${resName}` })
 

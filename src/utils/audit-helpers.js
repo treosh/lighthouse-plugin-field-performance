@@ -21,8 +21,8 @@ const requests = new Map()
 /**
  * Cache results and parse crux data.
  *
- * @param {Object} artifacts
- * @param {Object} context
+ * @param {any} artifacts
+ * @param {any} context
  * @param {boolean} [isUrl]
  * @return {Promise<LoadingExperience>}
  */
@@ -52,7 +52,7 @@ exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
  *
  * @param {MetricValue} metricValue
  * @param {string} timeUnit
- * @param {Object} options
+ * @param {{ scorePODR: number, scoreMedian: number }} options
  * @return {Object}
  */
 
@@ -71,7 +71,7 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
     score,
     numericValue,
     displayValue,
-    details: createDistributionsTable(metricValue, timeUnit)
+    details: createDistributionsTable(metricValue, timeUnit),
   }
 }
 
@@ -82,12 +82,12 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
  * @return {Object}
  */
 
-exports.createNotApplicableResult = title => {
+exports.createNotApplicableResult = (title) => {
   return {
     score: null,
     notApplicable: true,
     explanation: `The Chrome User Experience Report 
-          does not have sufficient real-world ${title} data for this page.`
+          does not have sufficient real-world ${title} data for this page.`,
   }
 }
 
@@ -98,11 +98,11 @@ exports.createNotApplicableResult = title => {
  * @return {Object}
  */
 
-exports.createErrorResult = err => {
+exports.createErrorResult = (err) => {
   console.log(err)
   return {
     score: null,
-    errorMessage: err.toString()
+    errorMessage: err.toString(),
   }
 }
 
@@ -113,7 +113,7 @@ exports.createErrorResult = err => {
  * @return {boolean}
  */
 
-exports.isResultsInField = le => {
+exports.isResultsInField = (le) => {
   return !!le && Boolean(Object.values(le.metrics || {}).length)
 }
 
@@ -126,7 +126,7 @@ exports.isResultsInField = le => {
 function createDistributionsTable({ distributions }, timeUnit) {
   const headings = [
     { key: 'category', itemType: 'text', text: 'Category' },
-    { key: 'distribution', itemType: 'text', text: 'Percent of traffic' }
+    { key: 'distribution', itemType: 'text', text: 'Percent of traffic' },
   ]
 
   const items = distributions.map(({ min, max, proportion }, index) => {

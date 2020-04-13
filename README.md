@@ -58,8 +58,8 @@ module.exports = {
   extends: 'lighthouse:default',
   plugins: ['lighthouse-plugin-field-performance'],
   settings: {
-    psiToken: 'YOUR_REAL_TOKEN'
-  }
+    psiToken: 'YOUR_REAL_TOKEN',
+  },
 }
 ```
 
@@ -69,8 +69,8 @@ module.exports = {
 const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
 
 runLighthouse('https://www.apple.com', {
-  plugins: ['lighthouse-plugin-field-performance']
-}).then(result => {
+  plugins: ['lighthouse-plugin-field-performance'],
+}).then((result) => {
   console.log(result)
 })
 ```
@@ -79,6 +79,6 @@ runLighthouse('https://www.apple.com', {
 
 Sponsored by [Treo.sh - Page speed monitoring made easy](https://treo.sh).
 
-[![](https://travis-ci.org/treosh/lighthouse-plugin-field-performance.png)](https://travis-ci.org/treosh/lighthouse-plugin-field-performance)
+[![](https://github.com/treosh/lighthouse-plugin-field-performance/workflows/CI/badge.svg)](https://github.com/treosh/lighthouse-plugin-field-performance/actions?workflow=CI)
 [![](https://img.shields.io/npm/v/lighthouse-plugin-field-performance.svg)](https://npmjs.org/package/lighthouse-plugin-field-performance)
 [![](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)

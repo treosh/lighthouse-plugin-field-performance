@@ -4,13 +4,10 @@ const {
   createNotApplicableResult,
   createValueResult,
   createErrorResult,
-  isResultsInField
+  isResultsInField,
 } = require('../utils/audit-helpers')
 
 class FieldFidAudit extends Audit {
-  /**
-   * @return {Object}
-   */
   static get meta() {
     return {
       id: 'field-fid',
@@ -18,17 +15,14 @@ class FieldFidAudit extends Audit {
       description:
         'First Input Delay indicates how fast UI responded after the first interaction. The value represents the 95th percentile of the page traffic. [Learn More](https://developers.google.com/speed/docs/insights/v5/about#faq)',
       scoreDisplayMode: 'numeric',
-      requiredArtifacts: ['URL', 'settings']
+      requiredArtifacts: ['URL', 'settings'],
     }
   }
 
-  /**
-   * @return {Object}
-   */
   static get defaultOptions() {
     return {
       scorePODR: 50,
-      scoreMedian: 250
+      scoreMedian: 250,
     }
   }
 
