@@ -2,10 +2,10 @@
 
 > Lighthouse plugin that displays "field" performance of your page using real-world data from by Chrome UX Report.
 
-[An example report](https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd):
+[An example report](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
 
-<a href="https://googlechrome.github.io/lighthouse/viewer/?gist=a688f27b4a7c0561b6d7f9e2b70aa4bd">
-  <img align="center" width="956" src="https://user-images.githubusercontent.com/158189/65156251-0bee5e80-da2f-11e9-876b-6faa0125646b.png">
+<a href="https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c">
+  <img width="1138" alt="Lighthouse Field Performance Plugin" src="https://user-images.githubusercontent.com/158189/82894895-a5252b80-9f53-11ea-80ea-cb27f2897728.png">
 </a>
 
 <br />
@@ -13,7 +13,7 @@
 
 This plugin adds a field performance section with the real-world data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's similar to [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), with an addion of overall score.
 
-The scoring algorithm uses [PSI recommendations](https://developers.google.com/speed/docs/insights/v5/about#faq) and applies estimation for First Contentful Paint and First Input Delay. (Notice: the origin values does not affect score).
+The scoring algorithm uses [PSI recommendations](https://developers.google.com/speed/docs/insights/v5/about#faq) and applies estimation for First Contentful Paint and First Input Delay. (_Note_: the origin values does not affect score).
 
 Check out the parity between Field & Lab performance on mobile:
 
@@ -27,10 +27,10 @@ Sometimes field data is missing because the URL doesn't have enough anonymous tr
 
 ## Install
 
-Requires Node.js `10+` and Lighthouse `5+`.
+Requires Node.js `10+` and Lighthouse `6+`.
 
 ```bash
-$ npm install lighthouse-plugin-field-performance
+$ npm install lighthouse lighthouse-plugin-field-performance
 ```
 
 ## Usage
@@ -42,13 +42,13 @@ Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse)
 Pass plugin to Lighthouse:
 
 ```bash
-$ lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance
+$ npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance
 ```
 
 Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config:
 
 ```bash
-$ lighthouse https://www.apple.com/ --config-path=./config.js
+$ npx lighthouse https://www.apple.com/ --config-path=./config.js
 ```
 
 `config.js`
@@ -77,7 +77,7 @@ runLighthouse('https://www.apple.com', {
 
 ## Credits
 
-Sponsored by [Treo.sh - Page speed monitoring made easy](https://treo.sh).
+Sponsored by [Treo.sh - Page speed monitoring made simple](https://treo.sh).
 
 [![](https://github.com/treosh/lighthouse-plugin-field-performance/workflows/CI/badge.svg)](https://github.com/treosh/lighthouse-plugin-field-performance/actions?workflow=CI)
 [![](https://img.shields.io/npm/v/lighthouse-plugin-field-performance.svg)](https://npmjs.org/package/lighthouse-plugin-field-performance)
