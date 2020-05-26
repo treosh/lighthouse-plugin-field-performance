@@ -20,10 +20,7 @@ class FieldFcpOriginAudit extends Audit {
   }
 
   static get defaultOptions() {
-    return {
-      scorePODR: 1000,
-      scoreMedian: 2500,
-    }
+    return { p10: 1000, median: 3000 }
   }
 
   /**
