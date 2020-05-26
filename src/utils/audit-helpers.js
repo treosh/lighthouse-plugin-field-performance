@@ -52,14 +52,14 @@ exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
  *
  * @param {MetricValue} metricValue
  * @param {string} timeUnit
- * @param {{ scorePODR: number, scoreMedian: number }} options
+ * @param {{ p10: number, median: number }} options
  * @return {Object}
  */
 
 exports.createValueResult = (metricValue, timeUnit, options) => {
   let displayValue
   const numericValue = metricValue.percentile
-  const score = Audit.computeLogNormalScore(numericValue, options.scorePODR, options.scoreMedian)
+  const score = Audit.computeLogNormalScore(options, numericValue)
 
   if (isMs(timeUnit)) {
     displayValue = `${formatValue(numericValue, { isMs: true })} ms`
@@ -69,7 +69,9 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
 
   return {
     score,
+    scoreDisplayMode: 'numeric',
     numericValue,
+    numericUnit: 'millisecond',
     displayValue,
     details: createDistributionsTable(metricValue, timeUnit),
   }
@@ -135,11 +137,11 @@ function createDistributionsTable({ distributions }, timeUnit) {
     const normMax = formatValue(max, { isMs: isMs(timeUnit) })
 
     if (min === 0) {
-      item.category = `Fast (faster than ${normMax} ${timeUnit})`
+      item.category = `Good (faster than ${normMax} ${timeUnit})`
     } else if (max && min === distributions[index - 1].max) {
-      item.category = `Average (from ${normMin} ${timeUnit} to ${normMax} ${timeUnit})`
+      item.category = `Needs improvement (from ${normMin} ${timeUnit} to ${normMax} ${timeUnit})`
     } else {
-      item.category = `Slow (longer than ${normMin} ${timeUnit})`
+      item.category = `Poor (longer than ${normMin} ${timeUnit})`
     }
 
     item.distribution = `${(proportion * 100).toFixed()} %`
