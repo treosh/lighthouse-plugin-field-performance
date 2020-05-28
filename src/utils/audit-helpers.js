@@ -52,14 +52,15 @@ exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
  *
  * @param {MetricValue} metricValue
  * @param {string} timeUnit
- * @param {{ p10: number, median: number }} options
+ * @param {Metric} metric
  * @return {Object}
  */
 
-exports.createValueResult = (metricValue, timeUnit, options) => {
+exports.createValueResult = (metricValue, timeUnit, metric) => {
   let displayValue
   const numericValue = metricValue.percentile
-  const score = Audit.computeLogNormalScore(options, numericValue)
+  const range = getMetricRange(metric)
+  const score = Audit.computeLogNormalScore(range, numericValue)
 
   if (isMs(timeUnit)) {
     displayValue = `${formatValue(numericValue, { isMs: true })} ms`
@@ -69,9 +70,8 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
 
   return {
     score,
-    scoreDisplayMode: 'numeric',
     numericValue,
-    numericUnit: 'millisecond',
+    numericUnit: getMetricNumericUnit(metric),
     displayValue,
     details: createDistributionsTable(metricValue, timeUnit),
   }
@@ -175,4 +175,41 @@ function formatValue(value, { isMs = false } = {}) {
   const val = isMs ? Math.round(value / 10) * 10 : parseFloat((value / 1000).toFixed(1))
   const digits = Math.round(val) === val || isMs ? 0 : 1
   return simpleFormatNumber(val, { fractionDigits: digits })
+}
+
+/**
+ * Recommended ranks (https://web.dev/metrics/):
+ *
+ * FCP: Fast < 1 second,   Slow > 3s,    WEIGHT: 15%
+ * LCP: Fast < 2.5 second, Slow > 4s,    WEIGHT: 35%
+ * FID: Fast < 100 ms,     Slow > 300ms, WEIGHT: 30%
+ * CLS: Fast < 0.1,        Slow > 0.25,  WEIGHT: 20%
+ *
+ * `p10` value is calibrated to return 0.9 for the fast value,
+ * `median` value returns 0.5.
+ *
+ * The logic is taken from Lighthouse:
+ * https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/audits/metrics/largest-contentful-paint.js#L45
+ *
+ * @param {Metric} metric
+ */
+
+function getMetricRange(metric) {
+  switch (metric) {
+    case 'fcp':
+      return { p10: 400 /* 1000 => 90 */, median: 3000 /* 3000 => 50 */ }
+    case 'lcp':
+      return { p10: 2250 /* 2500 => 90 */, median: 4000 /* 4000 => 50 */ }
+    case 'fid':
+      return { p10: 40 /* 100 => 90 */, median: 300 /* 300 => 50 */ }
+    case 'cls':
+      return { p10: 0.055 /* 0.1 => 90 */, median: 0.25 /* 0.25 => 50 */ }
+    default:
+      throw new Error(`Invalid metric range: ${metric}`)
+  }
+}
+
+/** @param {Metric} metric */
+function getMetricNumericUnit(metric) {
+  return metric === 'cls' ? 'unitless' : 'millisecond'
 }

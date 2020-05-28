@@ -6,3 +6,4 @@ declare module 'simple-format-number' {
   function simplerFormatNumber(value: number, opts: { fractionDigits?: number }): string
   export = simplerFormatNumber
 }
+declare type Metric = 'fcp' | 'lcp' | 'fid' | 'cls'

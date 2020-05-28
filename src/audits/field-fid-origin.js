@@ -19,10 +19,6 @@ class FieldFidOriginAudit extends Audit {
     }
   }
 
-  static get defaultOptions() {
-    return { p10: 100, median: 300 }
-  }
-
   /**
    * @param {Object} artifacts
    * @param {Object} context
@@ -32,7 +28,7 @@ class FieldFidOriginAudit extends Audit {
     try {
       const ole = await getLoadingExperience(artifacts, context, false)
       if (!isResultsInField(ole)) return createNotApplicableResult(FieldFidOriginAudit.meta.title)
-      return createValueResult(ole.metrics.FIRST_INPUT_DELAY_MS, 'ms', FieldFidOriginAudit.defaultOptions)
+      return createValueResult(ole.metrics.FIRST_INPUT_DELAY_MS, 'ms', 'fid')
     } catch (err) {
       return createErrorResult(err)
     }

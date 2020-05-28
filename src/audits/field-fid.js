@@ -19,10 +19,6 @@ class FieldFidAudit extends Audit {
     }
   }
 
-  static get defaultOptions() {
-    return { p10: 100, median: 300 }
-  }
-
   /**
    * @param {Object} artifacts
    * @param {Object} context
@@ -32,7 +28,7 @@ class FieldFidAudit extends Audit {
     try {
       const le = await getLoadingExperience(artifacts, context)
       if (!isResultsInField(le)) return createNotApplicableResult(FieldFidAudit.meta.title)
-      return createValueResult(le.metrics.FIRST_INPUT_DELAY_MS, 'ms', FieldFidAudit.defaultOptions)
+      return createValueResult(le.metrics.FIRST_INPUT_DELAY_MS, 'ms', 'fid')
     } catch (err) {
       return createErrorResult(err)
     }

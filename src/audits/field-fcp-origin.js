@@ -19,10 +19,6 @@ class FieldFcpOriginAudit extends Audit {
     }
   }
 
-  static get defaultOptions() {
-    return { p10: 1000, median: 3000 }
-  }
-
   /**
    * @param {Object} artifacts
    * @param {Object} context
@@ -32,7 +28,7 @@ class FieldFcpOriginAudit extends Audit {
     try {
       const ole = await getLoadingExperience(artifacts, context, false)
       if (!isResultsInField(ole)) return createNotApplicableResult(FieldFcpOriginAudit.meta.title)
-      return createValueResult(ole.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', FieldFcpOriginAudit.defaultOptions)
+      return createValueResult(ole.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', 'fcp')
     } catch (err) {
       return createErrorResult(err)
     }

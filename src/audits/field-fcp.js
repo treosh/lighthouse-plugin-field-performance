@@ -19,10 +19,6 @@ class FieldFcpAudit extends Audit {
     }
   }
 
-  static get defaultOptions() {
-    return { p10: 1000, median: 3000 }
-  }
-
   /**
    * @param {Object} artifacts
    * @param {Object} context
@@ -32,7 +28,7 @@ class FieldFcpAudit extends Audit {
     try {
       const le = await getLoadingExperience(artifacts, context)
       if (!isResultsInField(le)) return createNotApplicableResult(FieldFcpAudit.meta.title)
-      return createValueResult(le.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', FieldFcpAudit.defaultOptions)
+      return createValueResult(le.metrics.FIRST_CONTENTFUL_PAINT_MS, 's', 'fcp')
     } catch (err) {
       return createErrorResult(err)
     }
