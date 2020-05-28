@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+const { default: fetch } = require('node-fetch')
 const { stringify } = require('querystring')
 
 // config
@@ -30,7 +30,7 @@ async function runPsi(opts, retryCounter = 0) {
   const res = await fetch(runPagespeedUrl + '?' + strParams)
   if (res.status === 200) return res.json()
 
-  const isJson = res.headers.get('content-type').includes('application/json')
+  const isJson = res.headers ? (res.headers.get('content-type') || '').includes('application/json') : false
   if (!isJson) {
     const text = await res.text()
     console.error('invalid PSI API response: status=%s text=%s', res.status, text)

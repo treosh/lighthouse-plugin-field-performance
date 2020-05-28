@@ -7,11 +7,11 @@ const {
   isResultsInField,
 } = require('../utils/audit-helpers')
 
-module.exports = class FieldFcpOriginAudit extends Audit {
+module.exports = class FieldLcpAudit extends Audit {
   static get meta() {
     return {
-      id: 'field-fcp-origin',
-      title: 'First Contentful Paint (FCP)',
+      id: 'field-lcp',
+      title: 'Largest Contentful Paint (LCP)',
       description: '...',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
@@ -21,9 +21,9 @@ module.exports = class FieldFcpOriginAudit extends Audit {
   /** @param {Object} artifacts @param {Object} context */
   static async audit(artifacts, context) {
     try {
-      const ole = await getLoadingExperience(artifacts, context, false)
-      if (!isResultsInField(ole)) return createNotApplicableResult(FieldFcpOriginAudit.meta.title)
-      return createValueResult(ole.metrics.FIRST_CONTENTFUL_PAINT_MS, 'fcp')
+      const le = await getLoadingExperience(artifacts, context)
+      if (!isResultsInField(le)) return createNotApplicableResult(FieldLcpAudit.meta.title)
+      return createValueResult(le.metrics.LARGEST_CONTENTFUL_PAINT_MS, 'lcp')
     } catch (err) {
       return createErrorResult(err)
     }

@@ -17,7 +17,7 @@ yarn link # create a global link for lighthouse-plugin-field-performance
 yarn link lighthouse-plugin-field-performance # add symlink to test the plugin locally
 
 yarn mobile-run https://www.apple.com/ # test plugin with a real PSI API response
-yarn desktop-run https://www.google.com/
+yarn desktop-run https://www.booking.com/
 
 yarn mobile-run https://treo.sh/ # empty response
 yarn desktop-run https://treo.sh/ # just origin
