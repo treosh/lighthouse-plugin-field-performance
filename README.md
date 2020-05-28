@@ -1,6 +1,7 @@
 # lighthouse-plugin-field-performance
 
-> A Lighthouse plugin that displays the field performance of your page. It uses real-world data from Chrome UX Report and Core Web Vitals to estimate the score.
+> A Lighthouse plugin that displays the field performance of your page.
+> It uses real-world data from Chrome UX Report and Core Web Vitals to estimate the score.
 
 [An example report for github.com](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
 
@@ -13,7 +14,7 @@
 
 This plugin adds a field performance category with real-world data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's exactly like [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), but for your local run and with a field performance score.
 
-The scoring algorithm uses [Core Web Vitals](https://web.dev/vitals/). It weigths values for Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. (_Note_: FCP and the origin values do not affect the score, [chech the source](./src/index.js))
+The scoring algorithm uses [Core Web Vitals](https://web.dev/vitals/). It weigths values for Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. (_Note_: FCP and the origin values do not affect the score, [see the source](./src/index.js))
 
 Check out the parity between Field & Lab performance on mobile:
 
