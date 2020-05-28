@@ -24,7 +24,7 @@ And on desktop:
 
 <img width="974" alt="Field & lab performance on desktop" src="https://user-images.githubusercontent.com/158189/65246645-4a4b5280-daef-11e9-92aa-e3495aebfa4b.png">
 
-Sometimes field data is missing because a URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement. Optimize, get more traffic, and measure again.
+Sometimes field data is missing because a URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement.
 
 ## Install
 
@@ -36,17 +36,13 @@ $ npm install lighthouse lighthouse-plugin-field-performance
 
 ## Usage
 
-Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse) or Node.js.
-
-### CLI
-
-Pass plugin to Lighthouse:
+Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse):
 
 ```bash
 $ npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance
 ```
 
-Pass your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) with a custom config:
+Provide your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) to run more requests (in production) with a custom config:
 
 ```bash
 $ npx lighthouse https://www.apple.com/ --config-path=./config.js

@@ -13,7 +13,7 @@ module.exports = class FieldFidAudit extends Audit {
       id: 'field-fid',
       title: 'First Input Delay (URL)',
       description:
-        'First Input Delay (FID) quantifies the experience users feel when trying to interact with unresponsive pages. A fast FID (75th percentile) helps ensure that the page is usable. [Learn more](https://web.dev/fid/)',
+        'First Input Delay (FID) quantifies the experience users feel when trying to interact with unresponsive pages. A fast FID (75th percentile) helps ensure that the page is usable. [Learn more about FID](https://web.dev/fid/)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

@@ -12,7 +12,7 @@ module.exports = class FieldClsAudit extends Audit {
     return {
       id: 'field-cls',
       title: 'Cumulative Layout Shift (URL)',
-      description: `Cumulative Layout Shift (CLS) measures the sum of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page. A low CLS (75th percentile) helps ensure that the page is delightful. [Learn more](https://web.dev/cls/)`,
+      description: `Cumulative Layout Shift (CLS) measures the sum of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page. A low CLS (75th percentile) helps ensure that the page is delightful. [Learn more about CLS](https://web.dev/cls/)`,
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }
