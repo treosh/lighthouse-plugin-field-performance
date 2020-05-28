@@ -12,7 +12,7 @@ module.exports = class FieldLcpAudit extends Audit {
     return {
       id: 'field-lcp',
       title: 'Largest Contentful Paint (URL)',
-      description: `Largest Contentful Paint (LCP) marks the time in the page load timeline when the page's main content has likely loaded. A fast LCP (75th percentile) helps reassure the user that the page is useful. [Learn more](https://web.dev/lcp/)`,
+      description: `Largest Contentful Paint (LCP) reports the render time of the largest content element that is visible within the viewport. A fast LCP (75th percentile) helps reassure the user that the page is useful. [Learn more](https://web.dev/lcp/)`,
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

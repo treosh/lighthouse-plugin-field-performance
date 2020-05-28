@@ -1,19 +1,19 @@
 # lighthouse-plugin-field-performance
 
-> Lighthouse plugin that displays "field" performance of your page using real-world data from by Chrome UX Report.
+> A Lighthouse plugin that displays the field performance of your page. It uses real-world data from Chrome UX Report and Core Web Vitals to estimate the score.
 
-[An example report](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
+[An example report for github.com](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
 
 <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c">
-  <img width="1138" alt="Lighthouse Field Performance Plugin" src="https://user-images.githubusercontent.com/158189/82894895-a5252b80-9f53-11ea-80ea-cb27f2897728.png">
+  <img width="1087" alt="Lighthouse Field Performance Plugin" src="https://user-images.githubusercontent.com/158189/83190516-d3ad2d00-a132-11ea-9f4a-68ead5b6a1b9.png">
 </a>
 
 <br />
 <br />
 
-This plugin adds a field performance section with the real-world data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's similar to [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), with an addion of overall score.
+This plugin adds a field performance category with real-world data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's exactly like [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/), but for your local run and with a field performance score.
 
-The scoring algorithm uses [PSI recommendations](https://developers.google.com/speed/docs/insights/v5/about#faq) and applies estimation for First Contentful Paint and First Input Delay. (_Note_: the origin values does not affect score).
+The scoring algorithm uses [Core Web Vitals](https://web.dev/vitals/). It weigths values for Largest Contentful Paint, First Input Delay, and Cumulative Layout Shift. (_Note_: FCP and the origin values do not affect the score, [chech the source](./src/index.js))
 
 Check out the parity between Field & Lab performance on mobile:
 
@@ -23,7 +23,7 @@ And on desktop:
 
 <img width="974" alt="Field & lab performance on desktop" src="https://user-images.githubusercontent.com/158189/65246645-4a4b5280-daef-11e9-92aa-e3495aebfa4b.png">
 
-Sometimes field data is missing because the URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement. Optimize, get more traffic, and measure again.
+Sometimes field data is missing because a URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement. Optimize, get more traffic, and measure again.
 
 ## Install
 
@@ -61,18 +61,6 @@ module.exports = {
     psiToken: 'YOUR_REAL_TOKEN',
   },
 }
-```
-
-### Node.js
-
-```js
-const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
-
-runLighthouse('https://www.apple.com', {
-  plugins: ['lighthouse-plugin-field-performance'],
-}).then((result) => {
-  console.log(result)
-})
 ```
 
 ## Credits

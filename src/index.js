@@ -20,7 +20,7 @@ module.exports = {
   category: {
     title: 'Field Performance',
     description:
-      'These metrics show the performance of the page over the past 28 days. Data is collected anonymously in for real-world Chrome users and provided by Chrome UX Report. [Learn More](https://developers.google.com/web/tools/chrome-user-experience-report/)',
+      'These metrics show the performance of the page over the past 30 days. Data is collected anonymously in for real-world Chrome users and provided by Chrome UX Report. [Learn More](https://developers.google.com/web/tools/chrome-user-experience-report/)',
     auditRefs: [
       // Now every metric is weighted equally, based on idea to pass all CWV.
       //
