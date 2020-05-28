@@ -23,15 +23,19 @@ serial('Measure field perf for site in CruX', async (t) => {
 
   const { audits, categories } = getTestResults(resName)
   checkResponse(audits['field-fcp'])
+  checkResponse(audits['field-lcp'])
   checkResponse(audits['field-fid'])
+  checkResponse(audits['field-cls'])
   checkResponse(audits['field-fcp-origin'])
+  checkResponse(audits['field-lcp-origin'])
   checkResponse(audits['field-fid-origin'])
+  checkResponse(audits['field-cls-origin'])
   t.snapshot(categories['lighthouse-plugin-field-performance'])
 
   /** @param {any} audit */
   function checkResponse(audit) {
     t.snapshot(omit(audit, ['details', 'displayValue', 'numericValue', 'score']))
-    t.true(isNumber(audit.score) && audit.score > 0 && audit.score < 1)
+    t.true(isNumber(audit.score) && audit.score >= 0 && audit.score <= 1)
     t.true(isNumber(audit.numericValue))
     t.true(isString(audit.displayValue))
     t.snapshot({
@@ -47,8 +51,12 @@ serial('Measure field perf for site site not in CruX', async (t) => {
 
   const { audits, categories } = getTestResults(resName)
   t.snapshot(audits['field-fcp'])
+  t.snapshot(audits['field-lcp'])
   t.snapshot(audits['field-fid'])
+  t.snapshot(audits['field-cls'])
   t.snapshot(audits['field-fcp-origin'])
+  t.snapshot(audits['field-lcp-origin'])
   t.snapshot(audits['field-fid-origin'])
+  t.snapshot(audits['field-cls-origin'])
   t.snapshot(categories['lighthouse-plugin-field-performance'])
 })

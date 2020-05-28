@@ -7,13 +7,12 @@ const {
   isResultsInField,
 } = require('../utils/audit-helpers')
 
-module.exports = class FieldFcpAudit extends Audit {
+module.exports = class FieldLcpAudit extends Audit {
   static get meta() {
     return {
-      id: 'field-fcp',
-      title: 'First Contentful Paint (URL)',
-      description:
-        'First Contentful Paint (FCP) marks the first time in the page load timeline where the user can see anything on the screen. A fast FCP (75th percentile) helps reassure the user that something is happening. [Learn more about FCP](https://web.dev/fcp/)',
+      id: 'field-lcp',
+      title: 'Largest Contentful Paint (URL)',
+      description: `Largest Contentful Paint (LCP) reports the render time of the largest content element that is visible within the viewport. A fast LCP (75th percentile) helps reassure the user that the page is useful. [Learn more about LCP](https://web.dev/lcp/)`,
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }
@@ -23,8 +22,8 @@ module.exports = class FieldFcpAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const le = await getLoadingExperience(artifacts, context)
-      if (!isResultsInField(le)) return createNotApplicableResult(FieldFcpAudit.meta.title)
-      return createValueResult(le.metrics.FIRST_CONTENTFUL_PAINT_MS, 'fcp')
+      if (!isResultsInField(le)) return createNotApplicableResult(FieldLcpAudit.meta.title)
+      return createValueResult(le.metrics.LARGEST_CONTENTFUL_PAINT_MS, 'lcp')
     } catch (err) {
       return createErrorResult(err)
     }

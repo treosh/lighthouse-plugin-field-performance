@@ -7,12 +7,13 @@ const {
   isResultsInField,
 } = require('../utils/audit-helpers')
 
-module.exports = class FieldFidOriginAudit extends Audit {
+module.exports = class FieldClsOriginAudit extends Audit {
   static get meta() {
     return {
-      id: 'field-fid-origin',
-      title: 'First Input Delay (Origin)',
-      description: `First Input Delay (FID) quantifies the experience users feel when trying to interact with unresponsive pages. The value is 75th percentile of the origin traffic. [Learn more about FID](https://web.dev/fid/)`,
+      id: 'field-cls-origin',
+      title: 'Cumulative Layout Shift (Origin)',
+      description:
+        'Cumulative Layout Shift (CLS) measures visual stability, and it helps quantify how often users experience unexpected layout shifts. The value is 75th percentile of the origin traffic. [Learn more about CLS](https://web.dev/cls/)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }
@@ -22,8 +23,8 @@ module.exports = class FieldFidOriginAudit extends Audit {
   static async audit(artifacts, context) {
     try {
       const ole = await getLoadingExperience(artifacts, context, false)
-      if (!isResultsInField(ole)) return createNotApplicableResult(FieldFidOriginAudit.meta.title)
-      return createValueResult(ole.metrics.FIRST_INPUT_DELAY_MS, 'fid')
+      if (!isResultsInField(ole)) return createNotApplicableResult(FieldClsOriginAudit.meta.title)
+      return createValueResult(ole.metrics.CUMULATIVE_LAYOUT_SHIFT_SCORE, 'cls')
     } catch (err) {
       return createErrorResult(err)
     }

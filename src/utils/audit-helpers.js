@@ -1,17 +1,12 @@
+const { round } = require('lodash')
 const { Audit } = require('lighthouse')
-const simpleFormatNumber = require('simple-format-number')
 const { runPsi } = require('./run-psi')
 
 /**
- * @typedef {Object} LoadingExperience
- * @property {string} id
- * @property {{ FIRST_INPUT_DELAY_MS: MetricValue, FIRST_CONTENTFUL_PAINT_MS: MetricValue}} metrics
- * @property {string} overall_category
- * @property {string} initial_url
- *
- * @typedef {Object} MetricValue
- * @property {number} percentile
- * @property {{ min: number, max: number, proportion: number}[]} distributions
+ * @typedef {'fcp' | 'lcp' | 'fid' | 'cls'} Metric
+ * @typedef {{ percentile: number, distributions: { min: number, max: number, proportion: number}[] }} MetricValue
+ * @typedef {{ id: string, overall_category: string, initial_url: string
+               metrics: { FIRST_INPUT_DELAY_MS: MetricValue, FIRST_CONTENTFUL_PAINT_MS: MetricValue, LARGEST_CONTENTFUL_PAINT_MS: MetricValue, CUMULATIVE_LAYOUT_SHIFT_SCORE: MetricValue } }} LoadingExperience
  */
 
 // cache PSI requests
@@ -51,29 +46,18 @@ exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
  * Estimate value and create numeric results
  *
  * @param {MetricValue} metricValue
- * @param {string} timeUnit
- * @param {{ p10: number, median: number }} options
+ * @param {Metric} metric
  * @return {Object}
  */
 
-exports.createValueResult = (metricValue, timeUnit, options) => {
-  let displayValue
-  const numericValue = metricValue.percentile
-  const score = Audit.computeLogNormalScore(options, numericValue)
-
-  if (isMs(timeUnit)) {
-    displayValue = `${formatValue(numericValue, { isMs: true })} ms`
-  } else {
-    displayValue = `${formatValue(numericValue)} s`
-  }
-
+exports.createValueResult = (metricValue, metric) => {
+  const numericValue = normalizeMetricValue(metric, metricValue.percentile)
   return {
-    score,
-    scoreDisplayMode: 'numeric',
     numericValue,
-    numericUnit: 'millisecond',
-    displayValue,
-    details: createDistributionsTable(metricValue, timeUnit),
+    score: Audit.computeLogNormalScore(getMetricRange(metric), numericValue),
+    numericUnit: getMetricNumericUnit(metric),
+    displayValue: formatMetric(metric, numericValue),
+    details: createDistributionsTable(metricValue, metric),
   }
 }
 
@@ -81,7 +65,6 @@ exports.createValueResult = (metricValue, timeUnit, options) => {
  * Create result when data does not exist.
  *
  * @param {string} title
- * @return {Object}
  */
 
 exports.createNotApplicableResult = (title) => {
@@ -97,7 +80,6 @@ exports.createNotApplicableResult = (title) => {
  * Create error result.
  *
  * @param {Error} err
- * @return {Object}
  */
 
 exports.createErrorResult = (err) => {
@@ -112,7 +94,6 @@ exports.createErrorResult = (err) => {
  * Checks if loading experience exists in field
  *
  * @param {LoadingExperience} le
- * @return {boolean}
  */
 
 exports.isResultsInField = (le) => {
@@ -121,30 +102,28 @@ exports.isResultsInField = (le) => {
 
 /**
  * @param {MetricValue} metricValue
- * @param {string} timeUnit
- * @return {Object}
+ * @param {Metric} metric
  */
 
-function createDistributionsTable({ distributions }, timeUnit) {
+function createDistributionsTable({ distributions }, metric) {
   const headings = [
     { key: 'category', itemType: 'text', text: 'Category' },
     { key: 'distribution', itemType: 'text', text: 'Percent of traffic' },
   ]
-
   const items = distributions.map(({ min, max, proportion }, index) => {
     const item = {}
-    const normMin = formatValue(min, { isMs: isMs(timeUnit) })
-    const normMax = formatValue(max, { isMs: isMs(timeUnit) })
+    const normMin = formatMetric(metric, normalizeMetricValue(metric, min))
+    const normMax = formatMetric(metric, normalizeMetricValue(metric, max))
 
     if (min === 0) {
-      item.category = `Good (faster than ${normMax} ${timeUnit})`
+      item.category = `Good (faster than ${normMax})`
     } else if (max && min === distributions[index - 1].max) {
-      item.category = `Needs improvement (from ${normMin} ${timeUnit} to ${normMax} ${timeUnit})`
+      item.category = `Needs improvement (from ${normMin} to ${normMax})`
     } else {
-      item.category = `Poor (longer than ${normMin} ${timeUnit})`
+      item.category = `Poor (longer than ${normMin})`
     }
 
-    item.distribution = `${(proportion * 100).toFixed()} %`
+    item.distribution = `${round(proportion * 100, 1)} %`
 
     return item
   })
@@ -153,26 +132,58 @@ function createDistributionsTable({ distributions }, timeUnit) {
 }
 
 /**
- * Check if `timeUnit` is in miliseconds
+ * Recommended ranks (https://web.dev/metrics/):
  *
- * @param {string} timeUnit
- * @return {boolean}
+ * FCP: Fast < 1.0 s,   Slow > 3.0 s
+ * LCP: Fast < 2.5 s,   Slow > 4.0 s
+ * FID: Fast < 100 ms,  Slow > 300 ms
+ * CLS: Fast < 0.10,    Slow > 0.25
+ *
+ * `p10` value is calibrated to return 0.9 for the fast value,
+ * `median` value returns 0.5.
+ *
+ * The logic is taken from Lighthouse:
+ * https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/audits/metrics/largest-contentful-paint.js#L45
+ *
+ * @param {Metric} metric
  */
 
-function isMs(timeUnit) {
-  return timeUnit === 'ms'
+function getMetricRange(metric) {
+  switch (metric) {
+    case 'fcp':
+      return { p10: 400 /* 1000 => 90 */, median: 3000 /* 3000 => 50 */ }
+    case 'lcp':
+      return { p10: 2250 /* 2500 => 90 */, median: 4000 /* 4000 => 50 */ }
+    case 'fid':
+      return { p10: 40 /* 100 => 90 */, median: 300 /* 300 => 50 */ }
+    case 'cls':
+      return { p10: 0.055 /* 0.1 => 90 */, median: 0.25 /* 0.25 => 50 */ }
+    default:
+      throw new Error(`Invalid metric range: ${metric}`)
+  }
 }
 
-/**
- * Format `value` to a readable string.
- *
- * @param {number} value
- * @param {{ isMs?: boolean }} [opts]
- * @return {string}
- */
+/** @param {Metric} metric, @param {number} value */
+function formatMetric(metric, value) {
+  switch (metric) {
+    case 'fcp':
+    case 'lcp':
+      return round(value / 1000, 1).toFixed(1) + ' s'
+    case 'fid':
+      return round(round(value / 10) * 10) + ' ms'
+    case 'cls':
+      return value === 0 ? '0' : value === 0.1 ? '0.10' : round(value, 3).toString()
+    default:
+      throw new Error(`Invalid metric format: ${metric}`)
+  }
+}
 
-function formatValue(value, { isMs = false } = {}) {
-  const val = isMs ? Math.round(value / 10) * 10 : parseFloat((value / 1000).toFixed(1))
-  const digits = Math.round(val) === val || isMs ? 0 : 1
-  return simpleFormatNumber(val, { fractionDigits: digits })
+/** @param {Metric} metric @param {number} value */
+function normalizeMetricValue(metric, value) {
+  return metric === 'cls' ? value / 100 : value
+}
+
+/** @param {Metric} metric */
+function getMetricNumericUnit(metric) {
+  return metric === 'cls' ? 'unitless' : 'millisecond'
 }

@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-plugin-field-performance",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Lighthouse plugin to display field data",
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
@@ -32,8 +32,8 @@
     "snapshotDir": "test/snapshots"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0",
-    "simple-format-number": "^0.1.2"
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
     "lighthouse": "^6.0.0"
@@ -41,9 +41,9 @@
   "devDependencies": {
     "@types/lodash": "^4.14.152",
     "@types/node": "^10.17.24",
+    "@types/node-fetch": "^2.5.7",
     "ava": "^3.8.2",
     "lighthouse": "^6.0.0",
-    "lodash": "^4.17.15",
     "prettier": "^2.0.5",
     "typescript": "^3.9.3"
   }
