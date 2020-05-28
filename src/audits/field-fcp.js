@@ -11,8 +11,9 @@ module.exports = class FieldFcpAudit extends Audit {
   static get meta() {
     return {
       id: 'field-fcp',
-      title: 'First Contentful Paint (FCP)',
-      description: '...',
+      title: 'First Contentful Paint (URL)',
+      description:
+        'First Contentful Paint (FCP) marks the first time in the page load timeline where the user can see anything on the screen. A fast FCP (75th percentile) helps reassure the user that something is happening. [Learn more](https://web.dev/fcp/)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

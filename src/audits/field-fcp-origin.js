@@ -11,8 +11,9 @@ module.exports = class FieldFcpOriginAudit extends Audit {
   static get meta() {
     return {
       id: 'field-fcp-origin',
-      title: 'First Contentful Paint (FCP)',
-      description: '...',
+      title: 'First Contentful Paint (Origin)',
+      description:
+        'First Contentful Paint (FCP) marks the first time in the page load timeline where the user can see anything on the screen. The value is 75th percentile of the origin traffic. [Learn more](https://web.dev/fcp/)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

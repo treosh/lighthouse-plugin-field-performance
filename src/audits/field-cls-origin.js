@@ -11,8 +11,9 @@ module.exports = class FieldClsOriginAudit extends Audit {
   static get meta() {
     return {
       id: 'field-cls-origin',
-      title: 'Cumulative Layout Shift (CLS)',
-      description: '...',
+      title: 'Cumulative Layout Shift (Origin)',
+      description:
+        'Cumulative Layout Shift (CLS) measures visual stability, and it helps quantify how often users experience unexpected layout shifts. The value is 75th percentile of the origin traffic. [Learn more](https://web.dev/cls/)',
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

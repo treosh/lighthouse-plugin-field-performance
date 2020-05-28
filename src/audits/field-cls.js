@@ -11,8 +11,8 @@ module.exports = class FieldClsAudit extends Audit {
   static get meta() {
     return {
       id: 'field-cls',
-      title: 'Cumulative Layout Shift (CLS)',
-      description: '...',
+      title: 'Cumulative Layout Shift (URL)',
+      description: `Cumulative Layout Shift (CLS) measures visual stability, and it helps quantify how often users experience unexpected layout shifts. A low CLS (75th percentile) helps ensure that the page is delightful. [Learn more](https://web.dev/cls/)`,
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }

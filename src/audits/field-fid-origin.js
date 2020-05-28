@@ -11,8 +11,8 @@ module.exports = class FieldFidOriginAudit extends Audit {
   static get meta() {
     return {
       id: 'field-fid-origin',
-      title: 'First Input Delay (FID)',
-      description: '...',
+      title: 'First Input Delay (Origin)',
+      description: `First Input Delay (FID) quantifies the experience users feel when trying to interact with unresponsive pages. The value is 75th percentile of the origin traffic. [Learn more](https://web.dev/fid/)`,
       scoreDisplayMode: 'numeric',
       requiredArtifacts: ['URL', 'settings'],
     }
