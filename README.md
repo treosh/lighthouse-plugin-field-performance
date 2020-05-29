@@ -18,11 +18,11 @@ The scoring algorithm uses [Core Web Vitals](https://web.dev/vitals/). It weigth
 
 Check out the parity between Field & Lab performance on mobile:
 
-<img width="974" alt="Field & lab performance on mobile" src="https://user-images.githubusercontent.com/158189/65246644-4a4b5280-daef-11e9-9b1d-9158297a1f89.png">
+<img width="974" alt="Field & lab performance on mobile" src="https://user-images.githubusercontent.com/158189/83234683-fec66980-a190-11ea-9881-a03152936a7f.png">
 
 And on desktop:
 
-<img width="974" alt="Field & lab performance on desktop" src="https://user-images.githubusercontent.com/158189/65246645-4a4b5280-daef-11e9-92aa-e3495aebfa4b.png">
+<img width="974" alt="Field & lab performance on desktop" src="https://user-images.githubusercontent.com/158189/83234694-01c15a00-a191-11ea-8207-b95bffb3f25a.png">
 
 Sometimes field data is missing because a URL doesn't have enough anonymous traffic. In this case, the lab data is the only available measurement.
 
