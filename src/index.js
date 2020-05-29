@@ -5,14 +5,14 @@ const scoreAllCategories = ReportScoring.scoreAllCategories
  * Monkey-patch Lighthouse's ReportScoring to support Core Web Vitals logic.
  * https://github.com/GoogleChrome/lighthouse/blob/f3d0e3459d8fd15b055148dec0ae4e430df6495b/lighthouse-core/scoring.js
  *
- * Logic: a URL passes the Core Web Vitals assessment if all metrics pass its thresholds.
+ * Logic: a URL passes the Core Web Vitals assessment if all its metrics pass thresholds.
  * The algorithm picks the minimum score (not `averageMean` used in Lighthouse).
  *
  * Theory of constraints (https://en.wikipedia.org/wiki/Theory_of_constraints): a chain is no stronger than its weakest link.
  */
 
 /** @typedef {Object<string, {score: number}>} ResultsByAuditId */
-/** @typedef {{ score: number, auditRefs: { id: string, weight: number }[] }} CategoryResult */
+/** @typedef {{ score: ?number, auditRefs: { id: string, weight: number }[] }} CategoryResult */
 
 /** @param {any} configCategories @param {ResultsByAuditId} resultsByAuditId */
 ReportScoring.scoreAllCategories = function (configCategories, resultsByAuditId) {
@@ -27,7 +27,7 @@ ReportScoring.scoreAllCategories = function (configCategories, resultsByAuditId)
 function getMinScore(fieldPluginCategoryResult, resultsByAuditId) {
   const activeAuditRefs = fieldPluginCategoryResult.auditRefs.filter((auditRef) => auditRef.weight !== 0)
   const scores = activeAuditRefs.map((auditRef) => resultsByAuditId[auditRef.id].score)
-  return Math.min(...scores)
+  return scores.length ? Math.min(...scores) : 0
 }
 
 module.exports = {
