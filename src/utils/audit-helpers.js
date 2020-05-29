@@ -151,13 +151,13 @@ function createDistributionsTable({ distributions }, metric) {
 function getMetricRange(metric) {
   switch (metric) {
     case 'fcp':
-      return { p10: 400 /* 1000 => 90 */, median: 3000 /* 3000 => 50 */ }
+      return { p10: 1000, median: 3000 }
     case 'lcp':
-      return { p10: 2250 /* 2500 => 90 */, median: 4000 /* 4000 => 50 */ }
+      return { p10: 2500, median: 4000 }
     case 'fid':
-      return { p10: 40 /* 100 => 90 */, median: 300 /* 300 => 50 */ }
+      return { p10: 100, median: 300 }
     case 'cls':
-      return { p10: 0.055 /* 0.1 => 90 */, median: 0.25 /* 0.25 => 50 */ }
+      return { p10: 0.1, median: 0.25 }
     default:
       throw new Error(`Invalid metric range: ${metric}`)
   }

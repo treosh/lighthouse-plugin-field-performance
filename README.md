@@ -3,10 +3,10 @@
 > A Lighthouse plugin that displays the field performance of your page.
 > It uses real-world data from Chrome UX Report and Core Web Vitals to estimate the score.
 
-[An example report for github.com](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
+[An example report for developers.google.com](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
 
 <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c">
-  <img width="1087" alt="Lighthouse Field Performance Plugin" src="https://user-images.githubusercontent.com/158189/83190516-d3ad2d00-a132-11ea-9f4a-68ead5b6a1b9.png">
+  <img width="1081" alt="Lighthouse Field Performance Plugin" src="https://user-images.githubusercontent.com/158189/83232608-be192100-a18d-11ea-9298-e89e008a9d45.png">
 </a>
 
 <br />
