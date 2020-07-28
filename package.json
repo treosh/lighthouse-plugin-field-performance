@@ -39,12 +39,12 @@
     "lighthouse": "^6.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.152",
+    "@types/lodash": "^4.14.158",
     "@types/node": "^10.17.24",
     "@types/node-fetch": "^2.5.7",
-    "ava": "^3.8.2",
-    "lighthouse": "^6.0.0",
+    "ava": "^3.11.0",
+    "lighthouse": "^6.1.1",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.7"
   }
 }
