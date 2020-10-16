@@ -23,28 +23,31 @@
     "first input delay"
   ],
   "scripts": {
-    "test": "prettier -c src/** test/** package.json README.md && tsc -p . && ava test/index.js",
+    "test": "prettier -c src/** test/** package.json README.md && tsc -p . && ava",
     "mock-run": "node ./test/mock-run.js",
     "mobile-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --chrome-flags='--headless' --output-path=./results/mobile.html",
     "desktop-run": "lighthouse --plugins=lighthouse-plugin-field-performance --view --config-path=node_modules/lighthouse/lighthouse-core/config/lr-desktop-config.js --chrome-flags='--headless' --output-path=./results/desktop.html"
   },
   "ava": {
-    "snapshotDir": "test/snapshots"
+    "snapshotDir": "test/snapshots",
+    "files": [
+      "test/index.js"
+    ]
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
     "lighthouse": "^6.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.158",
+    "@types/lodash": "^4.14.162",
     "@types/node": "^10.17.24",
     "@types/node-fetch": "^2.5.7",
-    "ava": "^3.11.0",
-    "lighthouse": "^6.1.1",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.7"
+    "ava": "^3.13.0",
+    "lighthouse": "^6.4.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.3"
   }
 }
