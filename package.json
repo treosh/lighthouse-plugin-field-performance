@@ -32,7 +32,8 @@
     "snapshotDir": "test/snapshots",
     "files": [
       "test/index.js"
-    ]
+    ],
+    "timeout": "30s"
   },
   "dependencies": {
     "lodash": "^4.17.20",
