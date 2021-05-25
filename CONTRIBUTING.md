@@ -48,4 +48,5 @@ yarn test # run all linters && tests
 yarn tsc -p . # run typescript checks
 yarn ava test/index.js # run just AVA tests
 yarn ava test/index.js -u # update AVA snapshots
+PSI_TOKEN=... yarn ava test/index.js # run AVA with PSI_TOKEN
 ```

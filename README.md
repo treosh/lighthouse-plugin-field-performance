@@ -28,7 +28,7 @@ Sometimes field data is missing because a URL doesn't have enough anonymous traf
 
 ## Install
 
-Requires Node.js `10+` and Lighthouse `6+`.
+Requires Node.js `12+` and Lighthouse `7+`.
 
 ```bash
 $ npm install lighthouse lighthouse-plugin-field-performance
@@ -42,7 +42,7 @@ Use the plugin with [Lighthouse CLI](https://github.com/GoogleChrome/lighthouse)
 $ npx lighthouse https://www.apple.com/ --plugins=lighthouse-plugin-field-performance
 ```
 
-Provide your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) to run more requests (in production) with a custom config:
+To run more requests, provide your [PageSpeed Insights token](https://developers.google.com/speed/docs/insights/v5/get-started) using a custom config:
 
 ```bash
 $ npx lighthouse https://www.apple.com/ --config-path=./config.js

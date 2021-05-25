@@ -1,27 +1,11 @@
 const { serial } = require('ava')
-const { readFileSync } = require('fs')
-const { join } = require('path')
 const { omit, isNumber, isString } = require('lodash')
-const { runLighthouse } = require('lighthouse/lighthouse-cli/run')
+const chromeLauncher = require('chrome-launcher')
+const lighthouse = require('lighthouse')
+const psiToken = process.env.PSI_TOKEN || ''
 
-const lhOptions = {
-  output: ['json'],
-  outputPath: './results/test-results.json',
-  chromeFlags: '--headless --enable-logging --no-sandbox',
-  onlyCategories: ['lighthouse-plugin-field-performance'],
-  plugins: ['lighthouse-plugin-field-performance'],
-}
-
-/** @param {string} resName */
-const getTestResults = (resName) => {
-  return JSON.parse(readFileSync(join(__dirname, '../results', resName), 'utf8'))
-}
-
-serial('Measure field perf for site in CruX', async (t) => {
-  const resName = 'in-field.json'
-  await runLighthouse('https://example.com/', { ...lhOptions, outputPath: `./results/${resName}` })
-
-  const { audits, categories } = getTestResults(resName)
+serial.only('Measure field perf for site in CruX', async (t) => {
+  const { audits, categories } = await runLighthouse('https://example.com/')
   checkResponse(audits['field-fcp'])
   checkResponse(audits['field-lcp'])
   checkResponse(audits['field-fid'])
@@ -46,10 +30,7 @@ serial('Measure field perf for site in CruX', async (t) => {
 })
 
 serial('Measure field perf for site site not in CruX', async (t) => {
-  const resName = 'not-in-field.json'
-  await runLighthouse('https://alekseykulikov.com/', { ...lhOptions, outputPath: `./results/${resName}` })
-
-  const { audits, categories } = getTestResults(resName)
+  const { audits, categories } = await runLighthouse('https://alekseykulikov.com/')
   t.snapshot(audits['field-fcp'])
   t.snapshot(audits['field-lcp'])
   t.snapshot(audits['field-fid'])
@@ -60,3 +41,20 @@ serial('Measure field perf for site site not in CruX', async (t) => {
   t.snapshot(audits['field-cls-origin'])
   t.snapshot(categories['lighthouse-plugin-field-performance'])
 })
+
+/** @param {string} url */
+async function runLighthouse(url) {
+  const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless', '--enable-logging', '--no-sandbox'] })
+  const flags = {
+    port: chrome.port,
+    onlyCategories: ['lighthouse-plugin-field-performance'],
+  }
+  const config = {
+    extends: 'lighthouse:default',
+    plugins: ['lighthouse-plugin-field-performance'],
+    settings: psiToken ? { psiToken } : {},
+  }
+  const res = await lighthouse(url, flags, config)
+  await chrome.kill()
+  return res.lhr
+}
