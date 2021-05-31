@@ -25,7 +25,7 @@ const requests = new Map()
 
 exports.getLoadingExperience = async (artifacts, context, isUrl = true) => {
   const psiToken = context.settings.psiToken || null
-  const strategy = artifacts.settings.emulatedFormFactor === 'desktop' ? 'desktop' : 'mobile'
+  const strategy = artifacts.settings.formFactor === 'desktop' ? 'desktop' : 'mobile'
   const prefix = isUrl ? 'url' : 'origin'
   const { href, origin } = new URL(artifacts.URL.finalUrl)
   const url = `${prefix}:${href}`
@@ -159,6 +159,8 @@ function getMetricRange(metric) {
   }
 }
 
+const noLighthouseWeighting = false
+
 /**
  * Based on a precise drawing:
  * https://twitter.com/JohnMu/status/1395798952570724352
@@ -168,9 +170,12 @@ function getMetricRange(metric) {
  */
 
 function estimateMetricScore({ good, poor }, value) {
-  if (value <= good) return 1
-  if (value > poor) return 0
-  return round((poor - value) / (poor - good), 2) // FIXME: should be non-linear, but the chart is linear.
+  if (noLighthouseWeighting) {
+    if (value <= good) return 1
+    if (value > poor) return 0
+    return round((poor - value) / (poor - good), 2) // FIXME: should be non-linear, but the chart is linear.
+  }
+  return Audit.computeLogNormalScore({ p10: good, median: poor }, value)
 }
 
 /** @param {Metric} metric, @param {number} value */
