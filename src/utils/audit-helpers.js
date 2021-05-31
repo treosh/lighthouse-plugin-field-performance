@@ -3,6 +3,7 @@ const { Audit } = require('lighthouse')
 const { runPsi } = require('./run-psi')
 
 /**
+ * @typedef {{ good: number, poor: number }} Range
  * @typedef {'fcp' | 'lcp' | 'fid' | 'cls'} Metric
  * @typedef {{ percentile: number, distributions: { min: number, max: number, proportion: number}[] }} MetricValue
  * @typedef {{ id: string, overall_category: string, initial_url: string
@@ -54,7 +55,7 @@ exports.createValueResult = (metricValue, metric) => {
   const numericValue = normalizeMetricValue(metric, metricValue.percentile)
   return {
     numericValue,
-    score: Audit.computeLogNormalScore(getMetricRange(metric), numericValue),
+    score: estimateMetricScore(getMetricRange(metric), numericValue),
     numericUnit: getMetricNumericUnit(metric),
     displayValue: formatMetric(metric, numericValue),
     details: createDistributionsTable(metricValue, metric),
@@ -139,28 +140,37 @@ function createDistributionsTable({ distributions }, metric) {
  * FID: Fast < 100 ms,  Slow > 300 ms
  * CLS: Fast < 0.10,    Slow > 0.25
  *
- * `p10` value is calibrated to return 0.9 for the fast value,
- * `median` value returns 0.5.
- *
- * The logic is taken from Lighthouse:
- * https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/audits/metrics/largest-contentful-paint.js#L45
- *
  * @param {Metric} metric
+ * @return {Range}
  */
 
 function getMetricRange(metric) {
   switch (metric) {
     case 'fcp':
-      return { p10: 1000, median: 3000 }
+      return { good: 1000, poor: 3000 }
     case 'lcp':
-      return { p10: 2500, median: 4000 }
+      return { good: 2500, poor: 4000 }
     case 'fid':
-      return { p10: 100, median: 300 }
+      return { good: 100, poor: 150 }
     case 'cls':
-      return { p10: 0.1, median: 0.25 }
+      return { good: 0.1, poor: 0.25 }
     default:
       throw new Error(`Invalid metric range: ${metric}`)
   }
+}
+
+/**
+ * Based on a precise drawing:
+ * https://twitter.com/JohnMu/status/1395798952570724352
+ *
+ * @param {Range} range
+ * @param {number} value
+ */
+
+function estimateMetricScore({ good, poor }, value) {
+  if (value <= good) return 1
+  if (value > poor) return 0
+  return round((poor - value) / (poor - good), 2) // FIXME: should be non-linear, but the chart is linear.
 }
 
 /** @param {Metric} metric, @param {number} value */
