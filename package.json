@@ -1,7 +1,7 @@
 {
   "name": "lighthouse-plugin-field-performance",
-  "version": "2.2.1",
-  "description": "Lighthouse plugin to display field data",
+  "version": "3.0.0",
+  "description": "Lighthouse plugin that shows real-user data (field data) from Chrome UX Report",
   "repository": "https://github.com/treosh/lighthouse-plugin-field-performance",
   "author": "Aleksey Kulikov <alekseykulikov@me.com>, Artem Denysov <denysov.artem@gmail.com>",
   "license": "MIT",

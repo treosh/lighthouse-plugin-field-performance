@@ -1,7 +1,6 @@
 # lighthouse-plugin-field-performance
 
-> A Lighthouse plugin that displays the field performance of your page.
-> It uses real-world data from Chrome UX Report and Core Web Vitals to estimate the score.
+> Lighthouse plugin that adds field data to your report. It uses real-user data from Chrome UX Report and Core Web Vitals logic to estimate the score.
 
 [An example report for developers.google.com](https://googlechrome.github.io/lighthouse/viewer/?gist=d9072ab8ccb30622deab48e6d5ee229c):
 
@@ -14,7 +13,7 @@
 
 This plugin adds Core Web Vitals values to your Lighthouse report. The Field Performance category includes real-user data provided by [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). It's similar to the field section in [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/).
 
-The scoring algorithm weighs values for Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS) and picks a **minimum score**. It uses Core Web Vitals assessment that expects all its metrics to pass thresholds. For example, https://edition.cnn.com/ has LCP 5.9 s (15), FID 20 ms (100), and CLS 0.02 (100). It has `poor` mark in the [Search Console](https://support.google.com/webmasters/answer/9205520), and the score is 15. (_Note_: FCP and the origin values do not affect the score, [see the source](./src/index.js))
+The scoring algorithm weighs values for Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS). It uses the Core Web Vitals assessment logic that sets 1 if metric is good, 0 if metric is poor, and a value from 0 to 1 if it's between. (_Note_: FCP and the origin values do not affect the score, [see the source](./src/index.js))
 
 Check out the parity between Field & Lab performance on mobile:
 
@@ -28,7 +27,7 @@ Sometimes field data is missing because a URL doesn't have enough anonymous traf
 
 ## Install
 
-Requires Node.js `12+` and Lighthouse `7+`.
+Requires Node.js `12+` and Lighthouse `8+`.
 
 ```bash
 $ npm install lighthouse lighthouse-plugin-field-performance
