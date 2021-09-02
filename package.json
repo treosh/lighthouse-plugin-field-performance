@@ -36,18 +36,18 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "peerDependencies": {
-    "lighthouse": "^6.0.0"
+    "lighthouse": "^8.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.170",
-    "@types/node": "12",
-    "@types/node-fetch": "^2.5.10",
+    "@types/lodash": "^4.14.172",
+    "@types/node": "16.7.10",
+    "@types/node-fetch": "^2.5.12",
     "ava": "^3.15.0",
-    "lighthouse": "^7.5.0",
-    "prettier": "^2.3.0",
-    "typescript": "^4.2.4"
+    "lighthouse": "^8.3.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
   }
 }

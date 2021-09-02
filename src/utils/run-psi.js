@@ -20,7 +20,7 @@ module.exports = { runPsi }
  *
  * @param {{url: string, strategy: string, category?: string, psiToken?: string}} opts
  * @param {number} [retryCounter]
- * @return {Promise<Object>}
+ * @return {Promise<any>}
  */
 
 async function runPsi(opts, retryCounter = 0) {
@@ -36,7 +36,7 @@ async function runPsi(opts, retryCounter = 0) {
     console.error('invalid PSI API response: status=%s text=%s', res.status, text)
     return retry()
   } else {
-    const { error } = await res.json()
+    const { error } = /** @type {any} */ (await res.json())
     console.error('invalid PSI API response: status=%s error=%j', res.status, error)
     if (error.code === 429) {
       console.log('error (%s): Too Many Requests', error.code)
