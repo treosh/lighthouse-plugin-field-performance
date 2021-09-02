@@ -6,26 +6,34 @@ const psiToken = process.env.PSI_TOKEN || ''
 
 serial.only('Measure field perf for site in CruX', async (t) => {
   const { audits, categories } = await runLighthouse('https://example.com/')
-  checkResponse(audits['field-fcp'])
-  checkResponse(audits['field-lcp'])
-  checkResponse(audits['field-fid'])
-  checkResponse(audits['field-cls'])
-  checkResponse(audits['field-fcp-origin'])
-  checkResponse(audits['field-lcp-origin'])
-  checkResponse(audits['field-fid-origin'])
-  checkResponse(audits['field-cls-origin'])
-  t.snapshot(categories['lighthouse-plugin-field-performance'])
+  const category = categories['lighthouse-plugin-field-performance']
+  checkResponse('field-fcp')
+  checkResponse('field-lcp')
+  checkResponse('field-fid')
+  checkResponse('field-cls')
+  checkResponse('field-fcp-origin')
+  checkResponse('field-lcp-origin')
+  checkResponse('field-fid-origin')
+  checkResponse('field-cls-origin')
 
-  /** @param {any} audit */
-  function checkResponse(audit) {
-    t.snapshot(omit(audit, ['details', 'displayValue', 'numericValue', 'score']))
+  console.log('field performance score: %s', category.score)
+  t.snapshot(omit(category, ['score']))
+
+  /** @param {string} auditName */
+  function checkResponse(auditName) {
+    const audit = audits[auditName]
+    t.snapshot(omit(audit, ['details', 'displayValue', 'numericValue', 'score']), `check ${auditName}`)
     t.true(isNumber(audit.score) && audit.score >= 0 && audit.score <= 1)
     t.true(isNumber(audit.numericValue))
     t.true(isString(audit.displayValue))
-    t.snapshot({
-      ...audit.details,
-      items: audit.details.items.map(/** @param {object} item */ (item) => omit(item, ['distribution'])),
-    })
+    console.log('%s: %s/%s – %s', auditName, audit.numericValue, audit.displayValue, audit.score)
+    t.snapshot(
+      {
+        ...audit.details,
+        items: audit.details.items.map(/** @param {object} item */ (item) => omit(item, ['distribution'])),
+      },
+      `details ${auditName}`
+    )
   }
 })
 
