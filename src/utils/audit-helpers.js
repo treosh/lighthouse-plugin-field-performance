@@ -159,8 +159,6 @@ function getMetricRange(metric) {
   }
 }
 
-const noLighthouseWeighting = false
-
 /**
  * Based on a precise drawing:
  * https://twitter.com/JohnMu/status/1395798952570724352
@@ -170,12 +168,10 @@ const noLighthouseWeighting = false
  */
 
 function estimateMetricScore({ good, poor }, value) {
-  if (noLighthouseWeighting) {
-    if (value <= good) return 1
-    if (value > poor) return 0
-    return round((poor - value) / (poor - good), 2) // FIXME: should be non-linear, but the chart is linear.
-  }
-  return Audit.computeLogNormalScore({ p10: good, median: poor }, value)
+  if (value <= good) return 1
+  if (value > poor) return 0
+  const linearScore = round((poor - value) / (poor - good), 2)
+  return linearScore
 }
 
 /** @param {Metric} metric, @param {number} value */
