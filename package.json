@@ -39,7 +39,7 @@
     "node-fetch": "^2.6.1"
   },
   "peerDependencies": {
-    "lighthouse": "^8.0.0"
+    "lighthouse": "8 - 11"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.172",
